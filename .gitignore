@@ -38,3 +38,9 @@ Makefile.dep
 .ccls-cache/*
 compile_commands.json
 redis.code-workspace
+**/CMakeFiles/**
+*.cmake
+/cmake-build-debug/*
+/deps/**/*.a
+/CMakeCache.txt
+*.cbp
