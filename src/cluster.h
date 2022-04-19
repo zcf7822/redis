@@ -115,7 +115,11 @@ typedef struct clusterNodeFailReport {
 typedef struct clusterNode {
     mstime_t ctime; /* Node object creation time. */
     char name[CLUSTER_NAMELEN]; /* Node name, hex string, sha1-size */
+    // 节点标识
+    // 使用不同标识值记录节点的角色（主、从等）
+    // 以及节点目前的状态（在线、下线等）
     int flags;      /* CLUSTER_NODE_... */
+
     uint64_t configEpoch; /* Last configEpoch observed for this node */
     unsigned char slots[CLUSTER_SLOTS/8]; /* slots handled by this node */
     sds slots_info; /* Slots info represented by string. */
