@@ -80,6 +80,7 @@ struct connection {
     ConnectionCallbackFunc conn_handler;
     ConnectionCallbackFunc write_handler;
     ConnectionCallbackFunc read_handler;
+    // TCP套接字描述符
     int fd;
 };
 

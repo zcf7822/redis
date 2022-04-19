@@ -33,11 +33,15 @@
 
 struct clusterNode;
 
+// clusterLink中的套接字和缓冲区是用于连接其他节点的
+// redisClient中的套接字和缓冲区是用于连接客户端的
 /* clusterLink encapsulates everything needed to talk with a remote node. */
 typedef struct clusterLink {
     mstime_t ctime;             /* Link creation time */
     connection *conn;           /* Connection to remote node */
+    // 输出缓冲区，保存等待发送给其他节点的消息
     sds sndbuf;                 /* Packet send buffer */
+    // 输入缓冲区，保存从其他节点接收到的消息
     char *rcvbuf;               /* Packet reception buffer */
     size_t rcvbuf_len;          /* Used size of rcvbuf */
     size_t rcvbuf_alloc;        /* Allocated size of rcvbuf */
@@ -120,6 +124,7 @@ typedef struct clusterNode {
     // 以及节点目前的状态（在线、下线等）
     int flags;      /* CLUSTER_NODE_... */
 
+    // 节点当前配置纪元，用于实现故障转移
     uint64_t configEpoch; /* Last configEpoch observed for this node */
     unsigned char slots[CLUSTER_SLOTS/8]; /* slots handled by this node */
     sds slots_info; /* Slots info represented by string. */
@@ -138,11 +143,14 @@ typedef struct clusterNode {
     mstime_t repl_offset_time;  /* Unix time we received offset for this node */
     mstime_t orphaned_time;     /* Starting time of orphaned master condition */
     long long repl_offset;      /* Last known repl offset for this node. */
+    // 节点ip
     char ip[NET_IP_STR_LEN];  /* Latest known IP address of this node */
+    // 节点端口
     int port;                   /* Latest known clients port (TLS or plain). */
     int pport;                  /* Latest known clients plaintext port. Only used
                                    if the main clients port is for TLS. */
     int cport;                  /* Latest known cluster port of this node. */
+    // 保存连接节点所需的有关信息
     clusterLink *link;          /* TCP/IP link with this node */
     list *fail_reports;         /* List of nodes signaling this as failing */
 } clusterNode;
