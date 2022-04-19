@@ -126,8 +126,13 @@ typedef struct clusterNode {
 
     // 节点当前配置纪元，用于实现故障转移
     uint64_t configEpoch; /* Last configEpoch observed for this node */
+    // 当前节点负责处理的槽
+    // slots使用二进制位来表示处理的槽，slots长度为16384/8=2048
+    // 由于一个char占用一个字节，故，共2048个字节，即：16384个二进制位
+    // 索引i上的值为1，表示当前节点处理槽i；为0，表示不处理该槽
     unsigned char slots[CLUSTER_SLOTS/8]; /* slots handled by this node */
     sds slots_info; /* Slots info represented by string. */
+    // 当前节点处理的槽数量
     int numslots;   /* Number of slots handled by this node */
     int numslaves;  /* Number of slave nodes, if this is a master */
     struct clusterNode **slaves; /* pointers to slave nodes */
@@ -155,11 +160,19 @@ typedef struct clusterNode {
     list *fail_reports;         /* List of nodes signaling this as failing */
 } clusterNode;
 
+// 记录在当前节点视角下，集群的状态；如：
+// 集群在线还是离线，集群包含多少节点，集群当前的配置纪元
 typedef struct clusterState {
+    // 指向当前节点的指针
     clusterNode *myself;  /* This node */
+    // 集群当前配置纪元，用于实现故障转移
     uint64_t currentEpoch;
+    // 集群当前状态：在线or离线
     int state;            /* CLUSTER_OK, CLUSTER_FAIL, ... */
+    // 集群中处理着槽的节点数量
     int size;             /* Num of master nodes with at least one slot */
+    // 集群节点名单（包含myself节点）
+    // 节点名称 -> 表示该节点的clusterNode结构
     dict *nodes;          /* Hash table of name -> clusterNode structures */
     dict *nodes_black_list; /* Nodes we don't re-add for a few seconds. */
     clusterNode *migrating_slots_to[CLUSTER_SLOTS];
