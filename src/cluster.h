@@ -179,6 +179,8 @@ typedef struct clusterState {
     clusterNode *importing_slots_from[CLUSTER_SLOTS];
     clusterNode *slots[CLUSTER_SLOTS];
     uint64_t slots_keys_count[CLUSTER_SLOTS];
+    // 槽键之间关系：分值是槽号，成员是键
+    // 方便批量操作某些槽的键
     rax *slots_to_keys;
     /* The following fields are used to take the slave state on elections. */
     mstime_t failover_auth_time; /* Time of previous or next election. */
