@@ -174,10 +174,17 @@ typedef struct instanceLink {
 } instanceLink;
 
 typedef struct sentinelRedisInstance {
+    // 标识实例的类型以及该实例的当前状态
     int flags;      /* See SRI_... defines */
+    // 实例的名字
+    // 主服务器名称由用户在配置文件配置
+    // 从服务器以及Sentinel实例名字由Sentinel自动设置，格式为【ip:port】
     char *name;     /* Master name from the point of view of this sentinel. */
+    // 实例的运行id
     char *runid;    /* Run ID of this instance, or unique ID if is a Sentinel.*/
+    // 配置纪元，用于实现故障转移
     uint64_t config_epoch;  /* Configuration epoch. */
+    // 实例地址
     sentinelAddr *addr; /* Master host. */
     instanceLink *link; /* Link to the instance, may be shared for Sentinels. */
     mstime_t last_pub_time;   /* Last time we sent hello via Pub/Sub. */
@@ -188,6 +195,8 @@ typedef struct sentinelRedisInstance {
                                              SENTINEL is-master-down command. */
     mstime_t s_down_since_time; /* Subjectively down since time. */
     mstime_t o_down_since_time; /* Objectively down since time. */
+    // SENTINEL down-after-milliseconds选项设置的值
+    // 实例无响应持续多少毫秒之后被判断为主观下线（subjectively down）
     mstime_t down_after_period; /* Consider it down after that period. */
     mstime_t info_refresh;  /* Time at which we received INFO output from it. */
     dict *renamed_commands;     /* Commands renamed in this instance:
@@ -207,7 +216,11 @@ typedef struct sentinelRedisInstance {
     /* Master specific. */
     dict *sentinels;    /* Other sentinels monitoring the same master. */
     dict *slaves;       /* Slaves for this master instance. */
+    // SENTINEL monitor <master-name> <ip> <port> <quorum>选项中quorum参数的值
+    // 判断该实例为客观下线(objectively down)所需的支持投票数
     unsigned int quorum;/* Number of sentinels that need to agree on failure. */
+    // SENTINEL parallel-syncs <master-name> <number>选项的值
+    // 在执行故障转移时，可同时对新主服务器进行同步的从服务器数量
     int parallel_syncs; /* How many slaves to reconfigure at same time. */
     char *auth_pass;    /* Password to use for AUTH against master & replica. */
     char *auth_user;    /* Username for ACLs AUTH against master & replica. */
@@ -232,6 +245,8 @@ typedef struct sentinelRedisInstance {
     int failover_state; /* See SENTINEL_FAILOVER_STATE_* defines. */
     mstime_t failover_state_change_time;
     mstime_t failover_start_time;   /* Last failover attempt start time. */
+    // SENTINEL failover-timeout <master-name> <ms>选项的值
+    // 刷新故障迁移状态的最大时限
     mstime_t failover_timeout;      /* Max time to refresh failover state. */
     mstime_t failover_delay_logged; /* For what failover_start_time value we
                                        logged the failover delay. */
