@@ -195,7 +195,7 @@ typedef struct sentinelRedisInstance {
                                              SENTINEL is-master-down command. */
     mstime_t s_down_since_time; /* Subjectively down since time. */
     mstime_t o_down_since_time; /* Objectively down since time. */
-    // SENTINEL down-after-milliseconds选项设置的值
+    // SENTINEL down-after-milliseconds <master-name> <period> 选项设置的值
     // 实例无响应持续多少毫秒之后被判断为主观下线（subjectively down）
     mstime_t down_after_period; /* Consider it down after that period. */
     mstime_t info_refresh;  /* Time at which we received INFO output from it. */
