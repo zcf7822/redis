@@ -175,16 +175,19 @@ typedef struct instanceLink {
 
 typedef struct sentinelRedisInstance {
     // 标识实例的类型以及该实例的当前状态
-    // 如：SRI_MASTER
+    // 如：SRI_MASTER、SRI_SLAVE等
     int flags;      /* See SRI_... defines */
     // 实例的名字
     // 主服务器名称由用户在配置文件配置
     // 从服务器以及Sentinel实例名字由Sentinel自动设置，格式为【ip:port】
     char *name;     /* Master name from the point of view of this sentinel. */
+
     // 实例的运行id
     char *runid;    /* Run ID of this instance, or unique ID if is a Sentinel.*/
+
     // 配置纪元，用于实现故障转移
     uint64_t config_epoch;  /* Configuration epoch. */
+
     // 实例地址
     sentinelAddr *addr; /* Master host. */
     instanceLink *link; /* Link to the instance, may be shared for Sentinels. */
@@ -217,6 +220,8 @@ typedef struct sentinelRedisInstance {
 
     /* Master specific. */
     dict *sentinels;    /* Other sentinels monitoring the same master. */
+
+    // 主服务器的从服务器信息
     dict *slaves;       /* Slaves for this master instance. */
 
     // 【SENTINEL monitor <master-name> <ip> <port> <quorum>】选项中quorum参数的值
