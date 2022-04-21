@@ -246,14 +246,23 @@ typedef struct sentinelRedisInstance {
 /* Main state. */
 struct sentinelState {
     char myid[CONFIG_RUN_ID_SIZE+1]; /* This sentinel ID. */
+    // 当前纪元：用于实现故障转移
     uint64_t current_epoch;         /* Current epoch. */
+    // 保存所有被该sentinel实例监视的主服务器
+    // 字典键：主服务器名称
+    // 字典值：指向sentinelRedisInstance结构的指针
     dict *masters;      /* Dictionary of master sentinelRedisInstances.
                            Key is the instance name, value is the
                            sentinelRedisInstance structure pointer. */
+    // 是否进入了TILT模式?
     int tilt;           /* Are we in TILT mode? */
+    // 目前正在执行的脚本数量
     int running_scripts;    /* Number of scripts in execution right now. */
+    // 进入TILT模式的时间
     mstime_t tilt_start_time;       /* When TITL started. */
+    // 最后一次执行时间处理器的时间
     mstime_t previous_time;         /* Last time we ran the time handler. */
+    // 所有需要执行的用户脚本
     list *scripts_queue;            /* Queue of user scripts to execute. */
     char *announce_ip;  /* IP addr that is gossiped to other sentinels if
                            not NULL. */
