@@ -218,6 +218,11 @@ typedef struct sentinelRedisInstance {
     mstime_t role_reported_time;
     mstime_t slave_conf_change_time; /* Last time slave master addr changed. */
 
+    // 所有监视该主服务器的Sentinel实例，包含本实例
+    // 只有表示主服务器的实例有该属性【Master specific.】
+    // Other sentinels monitoring the same master.
+    // 键为Sentinel实例的名称【ip:port】
+    // 值为Sentinel实例
     /* Master specific. */
     dict *sentinels;    /* Other sentinels monitoring the same master. */
 
