@@ -175,6 +175,7 @@ typedef struct instanceLink {
 
 typedef struct sentinelRedisInstance {
     // 标识实例的类型以及该实例的当前状态
+    // 如：SRI_MASTER
     int flags;      /* See SRI_... defines */
     // 实例的名字
     // 主服务器名称由用户在配置文件配置
@@ -195,7 +196,8 @@ typedef struct sentinelRedisInstance {
                                              SENTINEL is-master-down command. */
     mstime_t s_down_since_time; /* Subjectively down since time. */
     mstime_t o_down_since_time; /* Objectively down since time. */
-    // SENTINEL down-after-milliseconds <master-name> <period> 选项设置的值
+
+    // 【SENTINEL down-after-milliseconds <master-name> <period>】 选项设置的值
     // 实例无响应持续多少毫秒之后被判断为主观下线（subjectively down）
     mstime_t down_after_period; /* Consider it down after that period. */
     mstime_t info_refresh;  /* Time at which we received INFO output from it. */
@@ -216,10 +218,12 @@ typedef struct sentinelRedisInstance {
     /* Master specific. */
     dict *sentinels;    /* Other sentinels monitoring the same master. */
     dict *slaves;       /* Slaves for this master instance. */
-    // SENTINEL monitor <master-name> <ip> <port> <quorum>选项中quorum参数的值
+
+    // 【SENTINEL monitor <master-name> <ip> <port> <quorum>】选项中quorum参数的值
     // 判断该实例为客观下线(objectively down)所需的支持投票数
     unsigned int quorum;/* Number of sentinels that need to agree on failure. */
-    // SENTINEL parallel-syncs <master-name> <number>选项的值
+
+    // 【SENTINEL parallel-syncs <master-name> <number>】选项的值
     // 在执行故障转移时，可同时对新主服务器进行同步的从服务器数量
     int parallel_syncs; /* How many slaves to reconfigure at same time. */
     char *auth_pass;    /* Password to use for AUTH against master & replica. */
@@ -245,7 +249,8 @@ typedef struct sentinelRedisInstance {
     int failover_state; /* See SENTINEL_FAILOVER_STATE_* defines. */
     mstime_t failover_state_change_time;
     mstime_t failover_start_time;   /* Last failover attempt start time. */
-    // SENTINEL failover-timeout <master-name> <ms>选项的值
+
+    // 【SENTINEL failover-timeout <master-name> <ms>】选项的值
     // 刷新故障迁移状态的最大时限
     mstime_t failover_timeout;      /* Max time to refresh failover state. */
     mstime_t failover_delay_logged; /* For what failover_start_time value we
