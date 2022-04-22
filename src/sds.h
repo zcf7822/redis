@@ -50,7 +50,12 @@ struct __attribute__ ((__packed__)) sdshdr5 {
 };
 struct __attribute__ ((__packed__)) sdshdr8 {
     uint8_t len; /* used */
+
+    // 可用的字符空间大小：buf的大小 - len - 1(c字符串末尾必须是\0,不计算在内)
     uint8_t alloc; /* excluding the header and null terminator */
+
+    // 识别用的哪个sdshdr
+    // 目前只用了3位，还有5位空余
     unsigned char flags; /* 3 lsb of type, 5 unused bits */
     char buf[];
 };
