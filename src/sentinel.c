@@ -175,7 +175,7 @@ typedef struct instanceLink {
 
 typedef struct sentinelRedisInstance {
     // 标识实例的类型以及该实例的当前状态
-    // 如：SRI_MASTER、SRI_SLAVE等
+    // 如：SRI_MASTER、SRI_SLAVE、SRI_S_DOWN（主观下线状态）、SRI_O_DOWN（客观下线状态）等
     int flags;      /* See SRI_... defines */
     // 实例的名字
     // 主服务器名称由用户在配置文件配置
@@ -201,7 +201,7 @@ typedef struct sentinelRedisInstance {
     mstime_t o_down_since_time; /* Objectively down since time. */
 
     // 【SENTINEL down-after-milliseconds <master-name> <period>】 选项设置的值
-    // 实例无响应持续多少毫秒之后被判断为主观下线（subjectively down）
+    // 实例连续多久向Sentinel返回无效回复，会被判断为主观下线（subjectively down）
     mstime_t down_after_period; /* Consider it down after that period. */
     mstime_t info_refresh;  /* Time at which we received INFO output from it. */
     dict *renamed_commands;     /* Commands renamed in this instance:
