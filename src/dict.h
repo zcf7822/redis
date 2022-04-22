@@ -90,7 +90,7 @@ typedef struct dictht {
     // 元素是dictEntity结构的指针，保存键值对
     dictEntry **table;
 
-    // hash表大小
+    // hash表bucket数量
     unsigned long size;
 
     // 哈希表大小掩码，用于计算索引
@@ -98,7 +98,7 @@ typedef struct dictht {
     // 和哈希值一起决定key应该放到table数组哪个索引位置
     unsigned long sizemask;
 
-    // 该哈希表包含节点的bucket的数量
+    // 该哈希表已有节点数量
     unsigned long used;
 } dictht;
 
