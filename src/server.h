@@ -995,18 +995,34 @@ struct sharedObjectsStruct {
 
 /* ZSETs use a specialized version of Skiplists */
 typedef struct zskiplistNode {
+    // 成员：跳跃表中成员值唯一
     sds ele;
+    // 分值：跳跃表中节点按分值【从小到大】排列
+    // 分值相同时，按成员的字典顺序【从小到大】排列
     double score;
+    // 后退指针：只能后退回前一个节点
+    // 注：【第二个节点的后退指针指向NULL，而非头节点】
     struct zskiplistNode *backward;
+    // 层：一般来说，层的数量越多，访问其他节点的速度越快
+    // 每一层都指向下个节点的同一层
+    // 创建跳跃表节点时，根据幂次定律（越多的数出现的概率越小），随机生成1-32之间的值作为level数组的大小；
+    // level数组的大小就是层的高度
     struct zskiplistLevel {
+        // 层的前进指针
         struct zskiplistNode *forward;
+        // 跨度：前进指针所指向的节点与当前节点的距离
+        // 用来计算rank：查找某节点时，将沿途访问的所有层的跨度累加的结果，就是目标节点在跳跃表的rank
+        // 两个节点的跨度越多，相距越远；指向NULL的前进指针，跨度为0，因为他们没有指向任何节点
         unsigned long span;
     } level[];
 } zskiplistNode;
 
 typedef struct zskiplist {
+    // 头节点的成员、分值、后退指针都不会用到；
     struct zskiplistNode *header, *tail;
+    // 跳跃表的长度，即，节点数量（不包含头节点）
     unsigned long length;
+    // 当前跳跃表内，层数最大的节点的层数（不包含头节点的层数）
     int level;
 } zskiplist;
 
