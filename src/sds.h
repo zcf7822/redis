@@ -49,14 +49,18 @@ struct __attribute__ ((__packed__)) sdshdr5 {
     char buf[];
 };
 struct __attribute__ ((__packed__)) sdshdr8 {
+    // 已使用长度，用1字节存储
+    // 记录已经使用的字符串长度，不包含c字符串的末位符
     uint8_t len; /* used */
 
-    // 可用的字符空间大小：buf的大小 - len - 1(c字符串末尾必须是\0,不计算在内)
+    // 记录不包括SDS头部和结尾的NULL字符的情况下，sds能够存储的字符串的最大容量
     uint8_t alloc; /* excluding the header and null terminator */
 
     // 识别用的哪个sdshdr
-    // 目前只用了3位，还有5位空余
+    // 低3位存储类型, 高5位预留，一般通过与掩码按位与计算
     unsigned char flags; /* 3 lsb of type, 5 unused bits */
+
+    // 真正用来存储字符串，与c语言的字符串一样，末位有‘\0’
     char buf[];
 };
 struct __attribute__ ((__packed__)) sdshdr16 {
