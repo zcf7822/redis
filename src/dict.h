@@ -49,21 +49,36 @@
 
 typedef struct dictEntry {
     void *key;
+
+    // 值可以是指针、uint64_t整数、int64_t整数、double类型
     union {
         void *val;
         uint64_t u64;
         int64_t s64;
         double d;
     } v;
+
+    // 将多个哈希值相同的键值对连接起来，用于解决哈希冲突
     struct dictEntry *next;
 } dictEntry;
 
 typedef struct dictType {
+    // 计算hashcode的函数
     uint64_t (*hashFunction)(const void *key);
+
+    // 复制键的函数
     void *(*keyDup)(void *privdata, const void *key);
+
+    // 复制值的函数
     void *(*valDup)(void *privdata, const void *obj);
+
+    // 比较键的函数
     int (*keyCompare)(void *privdata, const void *key1, const void *key2);
+
+    // 销毁键的函数
     void (*keyDestructor)(void *privdata, void *key);
+
+    // 销毁键的函数
     void (*valDestructor)(void *privdata, void *obj);
     int (*expandAllowed)(size_t moreMem, double usedRatio);
 } dictType;
@@ -71,16 +86,37 @@ typedef struct dictType {
 /* This is our hash table structure. Every dictionary has two of this as we
  * implement incremental rehashing, for the old to the new table. */
 typedef struct dictht {
+    // hash表数组
+    // 元素是dictEntity结构的指针，保存键值对
     dictEntry **table;
+
+    // hash表大小
     unsigned long size;
+
+    // 哈希表大小掩码，用于计算索引
+    // 总是为：size - 1
+    // 和哈希值一起决定key应该放到table数组哪个索引位置
     unsigned long sizemask;
+
+    // 该哈希表已有节点数量
     unsigned long used;
 } dictht;
 
 typedef struct dict {
+    // 指向dictType结构的指针
+    // dictType用于保存一组针对特定类型键值对的函数
+    // 该属性用于实现字典的多态：Redis为不同用途的字典设置了不同的类型特定函数
     dictType *type;
+
+    // 保存需要传给类型特定函数的可选参数
+    // 配合type属性，用于实现字典的多态
     void *privdata;
+
+    // 通常情况下字典只使用哈希表ht[0]，哈希表ht[1]在对ht[0]进行rehash时使用
     dictht ht[2];
+
+    // 记录rehash对进度
+    // 不进行rehash时，值为-1
     long rehashidx; /* rehashing not in progress if rehashidx == -1 */
     int16_t pauserehash; /* If >0 rehashing is paused (<0 indicates coding error) */
 } dict;
