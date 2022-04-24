@@ -33,8 +33,18 @@
 #include <stdint.h>
 
 typedef struct intset {
+    // 编码方式：
+    // INTSET_ENC_INT16: int16_t类型(-32768 ~ 32767)
+    // INTSET_ENC_INT32: int32_t类型(-2 147 483 648 ~ 2 147 483 647)
+    // INTSET_ENC_INT64: int64_t类型(-9 223 372 036 854 775 808 ~ 9 223 372 036 854 775 807)
     uint32_t encoding;
+    // 集合中的元素数量：即，contents数组的长度
     uint32_t length;
+    // 保存元素的数组
+    // 各元素按【从小到大的顺序】排列，并且不包含重复值
+    // 虽然数组类型是int8_t，但实际contents不保存任何int8_t类型的值，
+    // contents数组的真正类型取决于encoding的值
+    // contents数组的大小为多少位：【sizeof(int16_t) * length】（当encoding属性为：INTSET_ENC_INT16时）
     int8_t contents[];
 } intset;
 
