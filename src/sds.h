@@ -50,7 +50,8 @@ struct __attribute__ ((__packed__)) sdshdr5 {
 };
 struct __attribute__ ((__packed__)) sdshdr8 {
     // 已使用长度，用1字节存储
-    // 记录已经使用的字符串长度，不包含c字符串的末位符
+    // 记录已经使用的字节数，不包含c字符串的末位符
+    // 如：【set key ""】sds的长度为0
     uint8_t len; /* used */
 
     // 记录不包括SDS头部和结尾的NULL字符的情况下，sds能够存储的字符串的最大容量
