@@ -671,12 +671,28 @@ typedef struct RedisModuleDigest {
 #define OBJ_STATIC_REFCOUNT (INT_MAX-1) /* Object allocated in the stack. */
 #define OBJ_FIRST_SPECIAL_REFCOUNT OBJ_STATIC_REFCOUNT
 typedef struct redisObject {
+    // 对象类型：
+    // REDIS_STRING：字符串对象
+    // REDIS_LIST：  列表对象
+    // REDIS_HASH：  哈希对象
+    // REDIS_SET：   集合对象
+    // REDIS_ZSET：  有序集合对象
     unsigned type:4;
+    // 对象所使用的底层结构的编码
+    // REDIS_ENCODING_INT：       long类型的整数
+    // REDIS_ENCODING_EMBSTR：    embstr编码的sds
+    // REDIS_ENCODING_RAW：       sds
+    // REDIS_ENCODING_HT：        字典
+    // REDIS_ENCODING_LINKEDLIST：双端链表
+    // REDIS_ENCODING_ZIPLIST：   压缩列表
+    // REDIS_ENCODING_INTSET：    整数集合
+    // REDIS_ENCODING_SKIPLIST：  跳跃表和字典（同时使用这两种结构实现有序集合）
     unsigned encoding:4;
     unsigned lru:LRU_BITS; /* LRU time (relative to global lru_clock) or
                             * LFU data (least significant 8 bits frequency
                             * and most significant 16 bits access time). */
     int refcount;
+    // 指向对象使用的底层数据结构，该结构由encoding属性决定
     void *ptr;
 } robj;
 
