@@ -1043,7 +1043,13 @@ typedef struct zskiplist {
 } zskiplist;
 
 typedef struct zset {
+    // 元素的成员到分值的映射
+    // 通过字典可以用O(1)复杂度查找给定成员的分值
+    // ZSCORE命令就是基于dict实现
     dict *dict;
+    // 按分值从小到大保存了所有集合元素
+    // 通过跳跃表，可以对有序集合进行有序型、范围型操作，比如：
+    // ZRANK、ZRANGE等命令
     zskiplist *zsl;
 } zset;
 
