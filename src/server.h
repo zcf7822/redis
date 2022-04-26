@@ -688,9 +688,11 @@ typedef struct redisObject {
     // REDIS_ENCODING_INTSET：    整数集合
     // REDIS_ENCODING_SKIPLIST：  跳跃表和字典（同时使用这两种结构实现有序集合）
     unsigned encoding:4;
+    // 记录对象最后一次被命令程序访问的时间
     unsigned lru:LRU_BITS; /* LRU time (relative to global lru_clock) or
                             * LFU data (least significant 8 bits frequency
                             * and most significant 16 bits access time). */
+    // 引用计数：该对象被引用的次数
     int refcount;
     // 指向对象使用的底层数据结构，该结构由encoding属性决定
     void *ptr;
