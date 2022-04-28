@@ -70,8 +70,11 @@ typedef void aeBeforeSleepProc(struct aeEventLoop *eventLoop);
 
 /* File event structure */
 typedef struct aeFileEvent {
+    // 掩码标识文件描述符的状态
     int mask; /* one of AE_(READABLE|WRITABLE|BARRIER) */
+    // 读程序
     aeFileProc *rfileProc;
+    // 写程序
     aeFileProc *wfileProc;
     void *clientData;
 } aeFileEvent;
@@ -83,6 +86,7 @@ typedef struct aeTimeEvent {
     aeTimeProc *timeProc;
     aeEventFinalizerProc *finalizerProc;
     void *clientData;
+    // 时间事件链表的上个节点
     struct aeTimeEvent *prev;
     struct aeTimeEvent *next;
     int refcount; /* refcount to prevent timer events from being
@@ -90,12 +94,15 @@ typedef struct aeTimeEvent {
 } aeTimeEvent;
 
 /* A fired event */
+// 已触发的事件，由底层epoll_wait或select返回fd，并封装了一层
 typedef struct aeFiredEvent {
     int fd;
     int mask;
 } aeFiredEvent;
 
 /* State of an event based program */
+// 基于事件的程序的状态
+// 事件循环主数据结构
 typedef struct aeEventLoop {
     int maxfd;   /* highest file descriptor currently registered */
     int setsize; /* max number of file descriptors tracked */
