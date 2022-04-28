@@ -118,19 +118,26 @@ typedef struct aeEventLoop {
 } aeEventLoop;
 
 /* Prototypes */
+// 创建事件驱动reactor
 aeEventLoop *aeCreateEventLoop(int setsize);
+// 删除事件驱动reactor
 void aeDeleteEventLoop(aeEventLoop *eventLoop);
 void aeStop(aeEventLoop *eventLoop);
+// 创建文件事件
 int aeCreateFileEvent(aeEventLoop *eventLoop, int fd, int mask,
         aeFileProc *proc, void *clientData);
 void aeDeleteFileEvent(aeEventLoop *eventLoop, int fd, int mask);
 int aeGetFileEvents(aeEventLoop *eventLoop, int fd);
+// 创建时间事件
 long long aeCreateTimeEvent(aeEventLoop *eventLoop, long long milliseconds,
         aeTimeProc *proc, void *clientData,
         aeEventFinalizerProc *finalizerProc);
 int aeDeleteTimeEvent(aeEventLoop *eventLoop, long long id);
+// 事件驱动循环
 int aeProcessEvents(aeEventLoop *eventLoop, int flags);
+// 调用epoll_wait返回可用的文件描述符
 int aeWait(int fd, int mask, long long milliseconds);
+// 事件驱动main函数，调用aeProcessEvents(eventLoop, AE_ALL_EVENTS\AE_CALL_AFTERSLEEP\...)
 void aeMain(aeEventLoop *eventLoop);
 char *aeGetApiName(void);
 void aeSetBeforeSleepProc(aeEventLoop *eventLoop, aeBeforeSleepProc *beforesleep);
