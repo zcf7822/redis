@@ -73,6 +73,17 @@ typedef struct ConnectionType {
 struct connection {
     ConnectionType *type;
     ConnectionState state;
+    // 记录客户端的角色和状态：
+    // flags = flag | flag | ...
+    // 1、可表示的角色：
+    // REDIS_MASTER: 代表主服务器（主从复制时，主服务器是从服务器的客户端，从服务器是主服务器的客户端）
+    // REDIS_SLAVE:  代表从服务器
+    // REDIS_LUA_CLIENT: 专门用于处理LUA脚本中redis命令的伪客户端
+    // 2、可表示的状态：
+    // REDIS_MONITOR: redis正在处理monitor命令
+    // REDIS_UNIX_SOCKET: 服务器使用UNIX套接字连接客户端
+    // REDIS_BLOCKED/REDIS_UNBLOCKED: 客户端正在被BRPOP、BLPOP等阻塞命令/不再阻塞
+    // REDIS_MULTI: 正在执行事务
     short int flags;
     short int refs;
     int last_errno;
@@ -81,6 +92,7 @@ struct connection {
     ConnectionCallbackFunc write_handler;
     ConnectionCallbackFunc read_handler;
     // TCP套接字描述符
+    // 对于客户端连接，根据客户端的类型
     int fd;
 };
 
