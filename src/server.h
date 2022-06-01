@@ -176,120 +176,120 @@ extern int configOOMScoreAdjValuesDefaults[CONFIG_OOM_COUNT];
 #define CMD_READONLY (1ULL<<1)         /* "read-only" flag */
 #define CMD_DENYOOM (1ULL<<2)          /* "use-memory" flag */
 #define CMD_MODULE (1ULL<<3)           /* Command exported by module. */
-#define CMD_ADMIN (1ULL<<4)            /* "admin" flag */
-#define CMD_PUBSUB (1ULL<<5)           /* "pub-sub" flag */
-#define CMD_NOSCRIPT (1ULL<<6)         /* "no-script" flag */
-#define CMD_RANDOM (1ULL<<7)           /* "random" flag */
-#define CMD_SORT_FOR_SCRIPT (1ULL<<8)  /* "to-sort" flag */
-#define CMD_LOADING (1ULL<<9)          /* "ok-loading" flag */
-#define CMD_STALE (1ULL<<10)           /* "ok-stale" flag */
-#define CMD_SKIP_MONITOR (1ULL<<11)    /* "no-monitor" flag */
-#define CMD_SKIP_SLOWLOG (1ULL<<12)    /* "no-slowlog" flag */
-#define CMD_ASKING (1ULL<<13)          /* "cluster-asking" flag */
-#define CMD_FAST (1ULL<<14)            /* "fast" flag */
-#define CMD_NO_AUTH (1ULL<<15)         /* "no-auth" flag */
-#define CMD_MAY_REPLICATE (1ULL<<16)   /* "may-replicate" flag */
+#define CMD_ (1ULL << 4) /* "" flag */
+#define CMD_PUBSUB (1ULL << 5) /* "pub-sub" flag */
+#define CMD_NOSCRIPT (1ULL << 6) /* "no-script" flag */
+#define CMD_RANDOM (1ULL << 7) /* "random" flag */
+#define CMD_SORT_FOR_SCRIPT (1ULL << 8) /* "to-sort" flag */
+#define CMD_LOADING (1ULL << 9) /* "ok-loading" flag */
+#define CMD_STALE (1ULL << 10) /* "ok-stale" flag */
+#define CMD_SKIP_MONITOR (1ULL << 11) /* "no-monitor" flag */
+#define CMD_SKIP_SLOWLOG (1ULL << 12) /* "no-slowlog" flag */
+#define CMD_ASKING (1ULL << 13) /* "cluster-asking" flag */
+#define CMD_FAST (1ULL << 14) /* "fast" flag */
+#define CMD_NO_AUTH (1ULL << 15) /* "no-auth" flag */
+#define CMD_MAY_REPLICATE (1ULL << 16) /* "may-replicate" flag */
 
 /* Command flags used by the module system. */
-#define CMD_MODULE_GETKEYS (1ULL<<17)  /* Use the modules getkeys interface. */
-#define CMD_MODULE_NO_CLUSTER (1ULL<<18) /* Deny on Redis Cluster. */
+#define CMD_MODULE_GETKEYS (1ULL << 17) /* Use the modules getkeys interface. */
+#define CMD_MODULE_NO_CLUSTER (1ULL << 18) /* Deny on Redis Cluster. */
 
 /* Command flags that describe ACLs categories. */
-#define CMD_CATEGORY_KEYSPACE (1ULL<<19)
-#define CMD_CATEGORY_READ (1ULL<<20)
-#define CMD_CATEGORY_WRITE (1ULL<<21)
-#define CMD_CATEGORY_SET (1ULL<<22)
-#define CMD_CATEGORY_SORTEDSET (1ULL<<23)
-#define CMD_CATEGORY_LIST (1ULL<<24)
-#define CMD_CATEGORY_HASH (1ULL<<25)
-#define CMD_CATEGORY_STRING (1ULL<<26)
-#define CMD_CATEGORY_BITMAP (1ULL<<27)
-#define CMD_CATEGORY_HYPERLOGLOG (1ULL<<28)
-#define CMD_CATEGORY_GEO (1ULL<<29)
-#define CMD_CATEGORY_STREAM (1ULL<<30)
-#define CMD_CATEGORY_PUBSUB (1ULL<<31)
-#define CMD_CATEGORY_ADMIN (1ULL<<32)
-#define CMD_CATEGORY_FAST (1ULL<<33)
-#define CMD_CATEGORY_SLOW (1ULL<<34)
-#define CMD_CATEGORY_BLOCKING (1ULL<<35)
-#define CMD_CATEGORY_DANGEROUS (1ULL<<36)
-#define CMD_CATEGORY_CONNECTION (1ULL<<37)
-#define CMD_CATEGORY_TRANSACTION (1ULL<<38)
-#define CMD_CATEGORY_SCRIPTING (1ULL<<39)
+#define CMD_CATEGORY_KEYSPACE (1ULL << 19)
+#define CMD_CATEGORY_READ (1ULL << 20)
+#define CMD_CATEGORY_WRITE (1ULL << 21)
+#define CMD_CATEGORY_SET (1ULL << 22)
+#define CMD_CATEGORY_SORTEDSET (1ULL << 23)
+#define CMD_CATEGORY_LIST (1ULL << 24)
+#define CMD_CATEGORY_HASH (1ULL << 25)
+#define CMD_CATEGORY_STRING (1ULL << 26)
+#define CMD_CATEGORY_BITMAP (1ULL << 27)
+#define CMD_CATEGORY_HYPERLOGLOG (1ULL << 28)
+#define CMD_CATEGORY_GEO (1ULL << 29)
+#define CMD_CATEGORY_STREAM (1ULL << 30)
+#define CMD_CATEGORY_PUBSUB (1ULL << 31)
+#define CMD_CATEGORY_ (1ULL << 32)
+#define CMD_CATEGORY_FAST (1ULL << 33)
+#define CMD_CATEGORY_SLOW (1ULL << 34)
+#define CMD_CATEGORY_BLOCKING (1ULL << 35)
+#define CMD_CATEGORY_DANGEROUS (1ULL << 36)
+#define CMD_CATEGORY_CONNECTION (1ULL << 37)
+#define CMD_CATEGORY_TRANSACTION (1ULL << 38)
+#define CMD_CATEGORY_SCRIPTING (1ULL << 39)
 
 /* AOF states */
-#define AOF_OFF 0             /* AOF is off */
-#define AOF_ON 1              /* AOF is on */
-#define AOF_WAIT_REWRITE 2    /* AOF waits rewrite to start appending */
+#define AOF_OFF 0 /* AOF is off */
+#define AOF_ON 1 /* AOF is on */
+#define AOF_WAIT_REWRITE 2 /* AOF waits rewrite to start appending */
 
 /* Client flags */
-#define CLIENT_SLAVE (1<<0)   /* This client is a replica */
-#define CLIENT_MASTER (1<<1)  /* This client is a master */
-#define CLIENT_MONITOR (1<<2) /* This client is a slave monitor, see MONITOR */
-#define CLIENT_MULTI (1<<3)   /* This client is in a MULTI context */
-#define CLIENT_BLOCKED (1<<4) /* The client is waiting in a blocking operation */
-#define CLIENT_DIRTY_CAS (1<<5) /* Watched keys modified. EXEC will fail. */
-#define CLIENT_CLOSE_AFTER_REPLY (1<<6) /* Close after writing entire reply. */
-#define CLIENT_UNBLOCKED (1<<7) /* This client was unblocked and is stored in
-                                  server.unblocked_clients */
-#define CLIENT_LUA (1<<8) /* This is a non connected client used by Lua */
-#define CLIENT_ASKING (1<<9)     /* Client issued the ASKING command */
-#define CLIENT_CLOSE_ASAP (1<<10)/* Close this client ASAP */
-#define CLIENT_UNIX_SOCKET (1<<11) /* Client connected via Unix domain socket */
-#define CLIENT_DIRTY_EXEC (1<<12)  /* EXEC will fail for errors while queueing */
-#define CLIENT_MASTER_FORCE_REPLY (1<<13)  /* Queue replies even if is master */
-#define CLIENT_FORCE_AOF (1<<14)   /* Force AOF propagation of current cmd. */
-#define CLIENT_FORCE_REPL (1<<15)  /* Force replication of current cmd. */
-#define CLIENT_PRE_PSYNC (1<<16)   /* Instance don't understand PSYNC. */
-#define CLIENT_READONLY (1<<17)    /* Cluster client is in read-only state. */
-#define CLIENT_PUBSUB (1<<18)      /* Client is in Pub/Sub mode. */
-#define CLIENT_PREVENT_AOF_PROP (1<<19)  /* Don't propagate to AOF. */
-#define CLIENT_PREVENT_REPL_PROP (1<<20)  /* Don't propagate to slaves. */
-#define CLIENT_PREVENT_PROP (CLIENT_PREVENT_AOF_PROP|CLIENT_PREVENT_REPL_PROP)
-#define CLIENT_PENDING_WRITE (1<<21) /* Client has output to send but a write
-                                        handler is yet not installed. */
-#define CLIENT_REPLY_OFF (1<<22)   /* Don't send replies to client. */
-#define CLIENT_REPLY_SKIP_NEXT (1<<23)  /* Set CLIENT_REPLY_SKIP for next cmd */
-#define CLIENT_REPLY_SKIP (1<<24)  /* Don't send just this reply. */
-#define CLIENT_LUA_DEBUG (1<<25)  /* Run EVAL in debug mode. */
-#define CLIENT_LUA_DEBUG_SYNC (1<<26)  /* EVAL debugging without fork() */
-#define CLIENT_MODULE (1<<27) /* Non connected client used by some module. */
-#define CLIENT_PROTECTED (1<<28) /* Client should not be freed for now. */
-#define CLIENT_PENDING_READ (1<<29) /* The client has pending reads and was put
-                                       in the list of clients we can read
-                                       from. */
-#define CLIENT_PENDING_COMMAND (1<<30) /* Indicates the client has a fully
-                                        * parsed command ready for execution. */
-#define CLIENT_TRACKING (1ULL<<31) /* Client enabled keys tracking in order to
-                                   perform client side caching. */
-#define CLIENT_TRACKING_BROKEN_REDIR (1ULL<<32) /* Target client is invalid. */
-#define CLIENT_TRACKING_BCAST (1ULL<<33) /* Tracking in BCAST mode. */
-#define CLIENT_TRACKING_OPTIN (1ULL<<34)  /* Tracking in opt-in mode. */
-#define CLIENT_TRACKING_OPTOUT (1ULL<<35) /* Tracking in opt-out mode. */
-#define CLIENT_TRACKING_CACHING (1ULL<<36) /* CACHING yes/no was given,
-                                              depending on optin/optout mode. */
-#define CLIENT_TRACKING_NOLOOP (1ULL<<37) /* Don't send invalidation messages
-                                             about writes performed by myself.*/
-#define CLIENT_IN_TO_TABLE (1ULL<<38) /* This client is in the timeout table. */
-#define CLIENT_PROTOCOL_ERROR (1ULL<<39) /* Protocol error chatting with it. */
-#define CLIENT_CLOSE_AFTER_COMMAND (1ULL<<40) /* Close after executing commands
-                                               * and writing entire reply. */
-#define CLIENT_DENY_BLOCKING (1ULL<<41) /* Indicate that the client should not be blocked.
-                                           currently, turned on inside MULTI, Lua, RM_Call,
-                                           and AOF client */
-#define CLIENT_REPL_RDBONLY (1ULL<<42) /* This client is a replica that only wants
-                                          RDB without replication buffer. */
+#define CLIENT_SLAVE (1 << 0) /* This client is a replica */
+#define CLIENT_MASTER (1 << 1) /* This client is a master */
+#define CLIENT_MONITOR (1 << 2) /* This client is a slave monitor, see MONITOR */
+#define CLIENT_MULTI (1 << 3) /* This client is in a MULTI context */
+#define CLIENT_BLOCKED (1 << 4) /* The client is waiting in a blocking operation */
+#define CLIENT_DIRTY_CAS (1 << 5) /* Watched keys modified. EXEC will fail. */
+#define CLIENT_CLOSE_AFTER_REPLY (1 << 6) /* Close after writing entire reply. */
+#define CLIENT_UNBLOCKED (1 << 7) /* This client was unblocked and is stored in \
+                                    server.unblocked_clients */
+#define CLIENT_LUA (1 << 8) /* This is a non connected client used by Lua */
+#define CLIENT_ASKING (1 << 9) /* Client issued the ASKING command */
+#define CLIENT_CLOSE_ASAP (1 << 10) /* Close this client ASAP */
+#define CLIENT_UNIX_SOCKET (1 << 11) /* Client connected via Unix domain socket */
+#define CLIENT_DIRTY_EXEC (1 << 12) /* EXEC will fail for errors while queueing */
+#define CLIENT_MASTER_FORCE_REPLY (1 << 13) /* Queue replies even if is master */
+#define CLIENT_FORCE_AOF (1 << 14) /* Force AOF propagation of current cmd. */
+#define CLIENT_FORCE_REPL (1 << 15) /* Force replication of current cmd. */
+#define CLIENT_PRE_PSYNC (1 << 16) /* Instance don't understand PSYNC. */
+#define CLIENT_READONLY (1 << 17) /* Cluster client is in read-only state. */
+#define CLIENT_PUBSUB (1 << 18) /* Client is in Pub/Sub mode. */
+#define CLIENT_PREVENT_AOF_PROP (1 << 19) /* Don't propagate to AOF. */
+#define CLIENT_PREVENT_REPL_PROP (1 << 20) /* Don't propagate to slaves. */
+#define CLIENT_PREVENT_PROP (CLIENT_PREVENT_AOF_PROP | CLIENT_PREVENT_REPL_PROP)
+#define CLIENT_PENDING_WRITE (1 << 21) /* Client has output to send but a write \
+                                          handler is yet not installed. */
+#define CLIENT_REPLY_OFF (1 << 22) /* Don't send replies to client. */
+#define CLIENT_REPLY_SKIP_NEXT (1 << 23) /* Set CLIENT_REPLY_SKIP for next cmd */
+#define CLIENT_REPLY_SKIP (1 << 24) /* Don't send just this reply. */
+#define CLIENT_LUA_DEBUG (1 << 25) /* Run EVAL in debug mode. */
+#define CLIENT_LUA_DEBUG_SYNC (1 << 26) /* EVAL debugging without fork() */
+#define CLIENT_MODULE (1 << 27) /* Non connected client used by some module. */
+#define CLIENT_PROTECTED (1 << 28) /* Client should not be freed for now. */
+#define CLIENT_PENDING_READ (1 << 29) /* The client has pending reads and was put \
+                                         in the list of clients we can read       \
+                                         from. */
+#define CLIENT_PENDING_COMMAND (1 << 30) /* Indicates the client has a fully \
+                                          * parsed command ready for execution. */
+#define CLIENT_TRACKING (1ULL << 31) /* Client enabled keys tracking in order to \
+                                     perform client side caching. */
+#define CLIENT_TRACKING_BROKEN_REDIR (1ULL << 32) /* Target client is invalid. */
+#define CLIENT_TRACKING_BCAST (1ULL << 33) /* Tracking in BCAST mode. */
+#define CLIENT_TRACKING_OPTIN (1ULL << 34) /* Tracking in opt-in mode. */
+#define CLIENT_TRACKING_OPTOUT (1ULL << 35) /* Tracking in opt-out mode. */
+#define CLIENT_TRACKING_CACHING (1ULL << 36) /* CACHING yes/no was given, \
+                                                depending on optin/optout mode. */
+#define CLIENT_TRACKING_NOLOOP (1ULL << 37) /* Don't send invalidation messages \
+                                               about writes performed by myself.*/
+#define CLIENT_IN_TO_TABLE (1ULL << 38) /* This client is in the timeout table. */
+#define CLIENT_PROTOCOL_ERROR (1ULL << 39) /* Protocol error chatting with it. */
+#define CLIENT_CLOSE_AFTER_COMMAND (1ULL << 40) /* Close after executing commands \
+                                                 * and writing entire reply. */
+#define CLIENT_DENY_BLOCKING (1ULL << 41) /* Indicate that the client should not be blocked.  \
+                                             currently, turned on inside MULTI, Lua, RM_Call, \
+                                             and AOF client */
+#define CLIENT_REPL_RDBONLY (1ULL << 42) /* This client is a replica that only wants \
+                                            RDB without replication buffer. */
 
 /* Client block type (btype field in client structure)
  * if CLIENT_BLOCKED flag is set. */
-#define BLOCKED_NONE 0    /* Not blocked, no CLIENT_BLOCKED flag set. */
-#define BLOCKED_LIST 1    /* BLPOP & co. */
-#define BLOCKED_WAIT 2    /* WAIT for synchronous replication. */
-#define BLOCKED_MODULE 3  /* Blocked by a loadable module. */
-#define BLOCKED_STREAM 4  /* XREAD. */
-#define BLOCKED_ZSET 5    /* BZPOP et al. */
-#define BLOCKED_PAUSE 6   /* Blocked by CLIENT PAUSE */
-#define BLOCKED_NUM 7     /* Number of blocked states. */
+#define BLOCKED_NONE 0 /* Not blocked, no CLIENT_BLOCKED flag set. */
+#define BLOCKED_LIST 1 /* BLPOP & co. */
+#define BLOCKED_WAIT 2 /* WAIT for synchronous replication. */
+#define BLOCKED_MODULE 3 /* Blocked by a loadable module. */
+#define BLOCKED_STREAM 4 /* XREAD. */
+#define BLOCKED_ZSET 5 /* BZPOP et al. */
+#define BLOCKED_PAUSE 6 /* Blocked by CLIENT PAUSE */
+#define BLOCKED_NUM 7 /* Number of blocked states. */
 
 /* Client request types */
 #define PROTO_REQ_INLINE 1
@@ -298,40 +298,40 @@ extern int configOOMScoreAdjValuesDefaults[CONFIG_OOM_COUNT];
 /* Client classes for client limits, currently used only for
  * the max-client-output-buffer limit implementation. */
 #define CLIENT_TYPE_NORMAL 0 /* Normal req-reply clients + MONITORs */
-#define CLIENT_TYPE_SLAVE 1  /* Slaves. */
+#define CLIENT_TYPE_SLAVE 1 /* Slaves. */
 #define CLIENT_TYPE_PUBSUB 2 /* Clients subscribed to PubSub channels. */
 #define CLIENT_TYPE_MASTER 3 /* Master. */
-#define CLIENT_TYPE_COUNT 4  /* Total number of client types. */
-#define CLIENT_TYPE_OBUF_COUNT 3 /* Number of clients to expose to output
-                                    buffer configuration. Just the first
+#define CLIENT_TYPE_COUNT 4 /* Total number of client types. */
+#define CLIENT_TYPE_OBUF_COUNT 3 /* Number of clients to expose to output \
+                                    buffer configuration. Just the first  \
                                     three: normal, slave, pubsub. */
 
 /* Slave replication state. Used in server.repl_state for slaves to remember
  * what to do next. */
 typedef enum {
-    REPL_STATE_NONE = 0,            /* No active replication */
-    REPL_STATE_CONNECT,             /* Must connect to master */
-    REPL_STATE_CONNECTING,          /* Connecting to master */
+    REPL_STATE_NONE = 0, /* No active replication */
+    REPL_STATE_CONNECT, /* Must connect to master */
+    REPL_STATE_CONNECTING, /* Connecting to master */
     /* --- Handshake states, must be ordered --- */
-    REPL_STATE_RECEIVE_PING_REPLY,  /* Wait for PING reply */
-    REPL_STATE_SEND_HANDSHAKE,      /* Send handshake sequance to master */
-    REPL_STATE_RECEIVE_AUTH_REPLY,  /* Wait for AUTH reply */
-    REPL_STATE_RECEIVE_PORT_REPLY,  /* Wait for REPLCONF reply */
-    REPL_STATE_RECEIVE_IP_REPLY,    /* Wait for REPLCONF reply */
-    REPL_STATE_RECEIVE_CAPA_REPLY,  /* Wait for REPLCONF reply */
-    REPL_STATE_SEND_PSYNC,          /* Send PSYNC */
+    REPL_STATE_RECEIVE_PING_REPLY, /* Wait for PING reply */
+    REPL_STATE_SEND_HANDSHAKE, /* Send handshake sequance to master */
+    REPL_STATE_RECEIVE_AUTH_REPLY, /* Wait for AUTH reply */
+    REPL_STATE_RECEIVE_PORT_REPLY, /* Wait for REPLCONF reply */
+    REPL_STATE_RECEIVE_IP_REPLY, /* Wait for REPLCONF reply */
+    REPL_STATE_RECEIVE_CAPA_REPLY, /* Wait for REPLCONF reply */
+    REPL_STATE_SEND_PSYNC, /* Send PSYNC */
     REPL_STATE_RECEIVE_PSYNC_REPLY, /* Wait for PSYNC reply */
     /* --- End of handshake states --- */
-    REPL_STATE_TRANSFER,        /* Receiving .rdb from master */
-    REPL_STATE_CONNECTED,       /* Connected to master */
+    REPL_STATE_TRANSFER, /* Receiving .rdb from master */
+    REPL_STATE_CONNECTED, /* Connected to master */
 } repl_state;
 
 /* The state of an in progress coordinated failover */
 typedef enum {
-    NO_FAILOVER = 0,        /* No failover in progress */
+    NO_FAILOVER = 0, /* No failover in progress */
     FAILOVER_WAIT_FOR_SYNC, /* Waiting for target replica to catch up */
-    FAILOVER_IN_PROGRESS    /* Waiting for target replica to accept
-                             * PSYNC FAILOVER request. */
+    FAILOVER_IN_PROGRESS /* Waiting for target replica to accept
+                          * PSYNC FAILOVER request. */
 } failover_state;
 
 /* State of slaves from the POV of the master. Used in client->replstate.
@@ -345,8 +345,8 @@ typedef enum {
 
 /* Slave capabilities. */
 #define SLAVE_CAPA_NONE 0
-#define SLAVE_CAPA_EOF (1<<0)    /* Can parse the RDB EOF streaming format. */
-#define SLAVE_CAPA_PSYNC2 (1<<1) /* Supports PSYNC2 protocol. */
+#define SLAVE_CAPA_EOF (1 << 0) /* Can parse the RDB EOF streaming format. */
+#define SLAVE_CAPA_PSYNC2 (1 << 1) /* Supports PSYNC2 protocol. */
 
 /* Synchronous read timeout - slave side */
 #define CONFIG_REPL_SYNCIO_TIMEOUT 5
@@ -365,7 +365,7 @@ typedef enum {
 #define LL_VERBOSE 1
 #define LL_NOTICE 2
 #define LL_WARNING 3
-#define LL_RAW (1<<10) /* Modifier to log without timestamp */
+#define LL_RAW (1 << 10) /* Modifier to log without timestamp */
 
 /* Supervision options */
 #define SUPERVISED_NONE 0
@@ -374,10 +374,10 @@ typedef enum {
 #define SUPERVISED_UPSTART 3
 
 /* Anti-warning macro... */
-#define UNUSED(V) ((void) V)
+#define UNUSED(V) ((void)V)
 
 #define ZSKIPLIST_MAXLEVEL 32 /* Should be enough for 2^64 elements */
-#define ZSKIPLIST_P 0.25      /* Skiplist P = 1/4 */
+#define ZSKIPLIST_P 0.25 /* Skiplist P = 1/4 */
 
 /* Append only defines */
 #define AOF_FSYNC_NO 0
@@ -412,41 +412,41 @@ typedef enum {
 /* Redis maxmemory strategies. Instead of using just incremental number
  * for this defines, we use a set of flags so that testing for certain
  * properties common to multiple policies is faster. */
-#define MAXMEMORY_FLAG_LRU (1<<0)
-#define MAXMEMORY_FLAG_LFU (1<<1)
-#define MAXMEMORY_FLAG_ALLKEYS (1<<2)
+#define MAXMEMORY_FLAG_LRU (1 << 0)
+#define MAXMEMORY_FLAG_LFU (1 << 1)
+#define MAXMEMORY_FLAG_ALLKEYS (1 << 2)
 #define MAXMEMORY_FLAG_NO_SHARED_INTEGERS \
-    (MAXMEMORY_FLAG_LRU|MAXMEMORY_FLAG_LFU)
+    (MAXMEMORY_FLAG_LRU | MAXMEMORY_FLAG_LFU)
 
-#define MAXMEMORY_VOLATILE_LRU ((0<<8)|MAXMEMORY_FLAG_LRU)
-#define MAXMEMORY_VOLATILE_LFU ((1<<8)|MAXMEMORY_FLAG_LFU)
-#define MAXMEMORY_VOLATILE_TTL (2<<8)
-#define MAXMEMORY_VOLATILE_RANDOM (3<<8)
-#define MAXMEMORY_ALLKEYS_LRU ((4<<8)|MAXMEMORY_FLAG_LRU|MAXMEMORY_FLAG_ALLKEYS)
-#define MAXMEMORY_ALLKEYS_LFU ((5<<8)|MAXMEMORY_FLAG_LFU|MAXMEMORY_FLAG_ALLKEYS)
-#define MAXMEMORY_ALLKEYS_RANDOM ((6<<8)|MAXMEMORY_FLAG_ALLKEYS)
-#define MAXMEMORY_NO_EVICTION (7<<8)
+#define MAXMEMORY_VOLATILE_LRU ((0 << 8) | MAXMEMORY_FLAG_LRU)
+#define MAXMEMORY_VOLATILE_LFU ((1 << 8) | MAXMEMORY_FLAG_LFU)
+#define MAXMEMORY_VOLATILE_TTL (2 << 8)
+#define MAXMEMORY_VOLATILE_RANDOM (3 << 8)
+#define MAXMEMORY_ALLKEYS_LRU ((4 << 8) | MAXMEMORY_FLAG_LRU | MAXMEMORY_FLAG_ALLKEYS)
+#define MAXMEMORY_ALLKEYS_LFU ((5 << 8) | MAXMEMORY_FLAG_LFU | MAXMEMORY_FLAG_ALLKEYS)
+#define MAXMEMORY_ALLKEYS_RANDOM ((6 << 8) | MAXMEMORY_FLAG_ALLKEYS)
+#define MAXMEMORY_NO_EVICTION (7 << 8)
 
 /* Units */
 #define UNIT_SECONDS 0
 #define UNIT_MILLISECONDS 1
 
 /* SHUTDOWN flags */
-#define SHUTDOWN_NOFLAGS 0      /* No flags. */
-#define SHUTDOWN_SAVE 1         /* Force SAVE on SHUTDOWN even if no save
-                                   points are configured. */
-#define SHUTDOWN_NOSAVE 2       /* Don't SAVE on SHUTDOWN. */
+#define SHUTDOWN_NOFLAGS 0 /* No flags. */
+#define SHUTDOWN_SAVE 1 /* Force SAVE on SHUTDOWN even if no save \
+                           points are configured. */
+#define SHUTDOWN_NOSAVE 2 /* Don't SAVE on SHUTDOWN. */
 
 /* Command call flags, see call() function */
 #define CMD_CALL_NONE 0
-#define CMD_CALL_SLOWLOG (1<<0)
-#define CMD_CALL_STATS (1<<1)
-#define CMD_CALL_PROPAGATE_AOF (1<<2)
-#define CMD_CALL_PROPAGATE_REPL (1<<3)
-#define CMD_CALL_PROPAGATE (CMD_CALL_PROPAGATE_AOF|CMD_CALL_PROPAGATE_REPL)
+#define CMD_CALL_SLOWLOG (1 << 0)
+#define CMD_CALL_STATS (1 << 1)
+#define CMD_CALL_PROPAGATE_AOF (1 << 2)
+#define CMD_CALL_PROPAGATE_REPL (1 << 3)
+#define CMD_CALL_PROPAGATE (CMD_CALL_PROPAGATE_AOF | CMD_CALL_PROPAGATE_REPL)
 #define CMD_CALL_FULL (CMD_CALL_SLOWLOG | CMD_CALL_STATS | CMD_CALL_PROPAGATE)
-#define CMD_CALL_NOWRAP (1<<4)  /* Don't wrap also propagate array into
-                                   MULTI/EXEC: the caller will handle it.  */
+#define CMD_CALL_NOWRAP (1 << 4) /* Don't wrap also propagate array into \
+                                    MULTI/EXEC: the caller will handle it.  */
 
 /* Command propagation flags, see propagate() function */
 #define PROPAGATE_NONE 0
@@ -457,31 +457,31 @@ typedef enum {
  * pause types than smaller pause types. */
 typedef enum {
     CLIENT_PAUSE_OFF = 0, /* Pause no commands */
-    CLIENT_PAUSE_WRITE,   /* Pause write commands */
-    CLIENT_PAUSE_ALL      /* Pause all commands */
+    CLIENT_PAUSE_WRITE, /* Pause write commands */
+    CLIENT_PAUSE_ALL /* Pause all commands */
 } pause_type;
 
 /* RDB active child save type. */
 #define RDB_CHILD_TYPE_NONE 0
-#define RDB_CHILD_TYPE_DISK 1     /* RDB is written to disk. */
-#define RDB_CHILD_TYPE_SOCKET 2   /* RDB is written to slave socket. */
+#define RDB_CHILD_TYPE_DISK 1 /* RDB is written to disk. */
+#define RDB_CHILD_TYPE_SOCKET 2 /* RDB is written to slave socket. */
 
 /* Keyspace changes notification classes. Every class is associated with a
  * character for configuration purposes. */
-#define NOTIFY_KEYSPACE (1<<0)    /* K */
-#define NOTIFY_KEYEVENT (1<<1)    /* E */
-#define NOTIFY_GENERIC (1<<2)     /* g */
-#define NOTIFY_STRING (1<<3)      /* $ */
-#define NOTIFY_LIST (1<<4)        /* l */
-#define NOTIFY_SET (1<<5)         /* s */
-#define NOTIFY_HASH (1<<6)        /* h */
-#define NOTIFY_ZSET (1<<7)        /* z */
-#define NOTIFY_EXPIRED (1<<8)     /* x */
-#define NOTIFY_EVICTED (1<<9)     /* e */
-#define NOTIFY_STREAM (1<<10)     /* t */
-#define NOTIFY_KEY_MISS (1<<11)   /* m (Note: This one is excluded from NOTIFY_ALL on purpose) */
-#define NOTIFY_LOADED (1<<12)     /* module only key space notification, indicate a key loaded from rdb */
-#define NOTIFY_MODULE (1<<13)     /* d, module key space notification */
+#define NOTIFY_KEYSPACE (1 << 0) /* K */
+#define NOTIFY_KEYEVENT (1 << 1) /* E */
+#define NOTIFY_GENERIC (1 << 2) /* g */
+#define NOTIFY_STRING (1 << 3) /* $ */
+#define NOTIFY_LIST (1 << 4) /* l */
+#define NOTIFY_SET (1 << 5) /* s */
+#define NOTIFY_HASH (1 << 6) /* h */
+#define NOTIFY_ZSET (1 << 7) /* z */
+#define NOTIFY_EXPIRED (1 << 8) /* x */
+#define NOTIFY_EVICTED (1 << 9) /* e */
+#define NOTIFY_STREAM (1 << 10) /* t */
+#define NOTIFY_KEY_MISS (1 << 11) /* m (Note: This one is excluded from NOTIFY_ALL on purpose) */
+#define NOTIFY_LOADED (1 << 12) /* module only key space notification, indicate a key loaded from rdb */
+#define NOTIFY_MODULE (1 << 13) /* d, module key space notification */
 #define NOTIFY_ALL (NOTIFY_GENERIC | NOTIFY_STRING | NOTIFY_LIST | NOTIFY_SET | NOTIFY_HASH | NOTIFY_ZSET | NOTIFY_EXPIRED | NOTIFY_EVICTED | NOTIFY_STREAM | NOTIFY_MODULE) /* A flag */
 
 /* Get the first bind addr or NULL */
@@ -490,12 +490,12 @@ typedef enum {
 /* Using the following macro you can run code inside serverCron() with the
  * specified period, specified in milliseconds.
  * The actual resolution depends on server.hz. */
-#define run_with_period(_ms_) if ((_ms_ <= 1000/server.hz) || !(server.cronloops%((_ms_)/(1000/server.hz))))
+#define run_with_period(_ms_) if ((_ms_ <= 1000 / server.hz) || !(server.cronloops % ((_ms_) / (1000 / server.hz))))
 
 /* We can print the stacktrace, so our assert is defined this way: */
-#define serverAssertWithInfo(_c,_o,_e) ((_e)?(void)0 : (_serverAssertWithInfo(_c,_o,#_e,__FILE__,__LINE__),redis_unreachable()))
-#define serverAssert(_e) ((_e)?(void)0 : (_serverAssert(#_e,__FILE__,__LINE__),redis_unreachable()))
-#define serverPanic(...) _serverPanic(__FILE__,__LINE__,__VA_ARGS__),redis_unreachable()
+#define serverAssertWithInfo(_c, _o, _e) ((_e) ? (void)0 : (_serverAssertWithInfo(_c, _o, #_e, __FILE__, __LINE__), redis_unreachable()))
+#define serverAssert(_e) ((_e) ? (void)0 : (_serverAssert(#_e, __FILE__, __LINE__), redis_unreachable()))
+#define serverPanic(...) _serverPanic(__FILE__, __LINE__, __VA_ARGS__), redis_unreachable()
 
 /*-----------------------------------------------------------------------------
  * Data types
@@ -504,11 +504,11 @@ typedef enum {
 /* A redis object, that is a type able to hold a string / list / set */
 
 /* The actual Redis Object */
-#define OBJ_STRING 0    /* String object. */
-#define OBJ_LIST 1      /* List object. */
-#define OBJ_SET 2       /* Set object. */
-#define OBJ_ZSET 3      /* Sorted set object. */
-#define OBJ_HASH 4      /* Hash object. */
+#define OBJ_STRING 0 /* String object. */
+#define OBJ_LIST 1 /* List object. */
+#define OBJ_SET 2 /* Set object. */
+#define OBJ_ZSET 3 /* Sorted set object. */
+#define OBJ_HASH 4 /* Hash object. */
 
 /* The "module" object type is a special one that signals that the object
  * is one directly managed by a Redis module. In this case the value points
@@ -521,18 +521,18 @@ typedef enum {
  * by a 64 bit module type ID, which has a 54 bits module-specific signature
  * in order to dispatch the loading to the right module, plus a 10 bits
  * encoding version. */
-#define OBJ_MODULE 5    /* Module object. */
-#define OBJ_STREAM 6    /* Stream object. */
+#define OBJ_MODULE 5 /* Module object. */
+#define OBJ_STREAM 6 /* Stream object. */
 
 /* Extract encver / signature from a module type ID. */
 #define REDISMODULE_TYPE_ENCVER_BITS 10
-#define REDISMODULE_TYPE_ENCVER_MASK ((1<<REDISMODULE_TYPE_ENCVER_BITS)-1)
+#define REDISMODULE_TYPE_ENCVER_MASK ((1 << REDISMODULE_TYPE_ENCVER_BITS) - 1)
 #define REDISMODULE_TYPE_ENCVER(id) (id & REDISMODULE_TYPE_ENCVER_MASK)
-#define REDISMODULE_TYPE_SIGN(id) ((id & ~((uint64_t)REDISMODULE_TYPE_ENCVER_MASK)) >>REDISMODULE_TYPE_ENCVER_BITS)
+#define REDISMODULE_TYPE_SIGN(id) ((id & ~((uint64_t)REDISMODULE_TYPE_ENCVER_MASK)) >> REDISMODULE_TYPE_ENCVER_BITS)
 
 /* Bit flags for moduleTypeAuxSaveFunc */
-#define REDISMODULE_AUX_BEFORE_RDB (1<<0)
-#define REDISMODULE_AUX_AFTER_RDB (1<<1)
+#define REDISMODULE_AUX_BEFORE_RDB (1 << 0)
+#define REDISMODULE_AUX_AFTER_RDB (1 << 1)
 
 struct RedisModule;
 struct RedisModuleIO;
@@ -562,12 +562,12 @@ typedef int (*moduleTypeDefragFunc)(struct RedisModuleDefragCtx *ctx, struct red
  * a user authenticated via the module API is associated with a different
  * user or gets disconnected. This needs to be exposed since you can't cast
  * a function pointer to (void *). */
-typedef void (*RedisModuleUserChangedFunc) (uint64_t client_id, void *privdata);
-
+typedef void (*RedisModuleUserChangedFunc)(uint64_t client_id, void *privdata);
 
 /* The module type, which is referenced in each value of a given type, defines
  * the methods and links to the module exporting the type. */
-typedef struct RedisModuleType {
+typedef struct RedisModuleType
+{
     uint64_t id; /* Higher 54 bits of type ID + 10 lower bits of encoding ver. */
     struct RedisModule *module;
     moduleTypeLoadFunc rdb_load;
@@ -601,7 +601,8 @@ typedef struct RedisModuleType {
  *      zfree(mt); // We need to release this in-the-middle struct as well.
  *  }
  */
-typedef struct moduleValue {
+typedef struct moduleValue
+{
     moduleType *type;
     void *value;
 } moduleValue;
@@ -609,75 +610,80 @@ typedef struct moduleValue {
 /* This is a wrapper for the 'rio' streams used inside rdb.c in Redis, so that
  * the user does not have to take the total count of the written bytes nor
  * to care about error conditions. */
-typedef struct RedisModuleIO {
-    size_t bytes;       /* Bytes read / written so far. */
-    rio *rio;           /* Rio stream. */
-    moduleType *type;   /* Module type doing the operation. */
-    int error;          /* True if error condition happened. */
-    int ver;            /* Module serialization version: 1 (old),
-                         * 2 (current version with opcodes annotation). */
+typedef struct RedisModuleIO
+{
+    size_t bytes; /* Bytes read / written so far. */
+    rio *rio; /* Rio stream. */
+    moduleType *type; /* Module type doing the operation. */
+    int error; /* True if error condition happened. */
+    int ver; /* Module serialization version: 1 (old),
+              * 2 (current version with opcodes annotation). */
     struct RedisModuleCtx *ctx; /* Optional context, see RM_GetContextFromIO()*/
-    struct redisObject *key;    /* Optional name of key processed */
+    struct redisObject *key; /* Optional name of key processed */
 } RedisModuleIO;
 
 /* Macro to initialize an IO context. Note that the 'ver' field is populated
  * inside rdb.c according to the version of the value to load. */
-#define moduleInitIOContext(iovar,mtype,rioptr,keyptr) do { \
-    iovar.rio = rioptr; \
-    iovar.type = mtype; \
-    iovar.bytes = 0; \
-    iovar.error = 0; \
-    iovar.ver = 0; \
-    iovar.key = keyptr; \
-    iovar.ctx = NULL; \
-} while(0)
+#define moduleInitIOContext(iovar, mtype, rioptr, keyptr) \
+    do {                                                  \
+        iovar.rio = rioptr;                               \
+        iovar.type = mtype;                               \
+        iovar.bytes = 0;                                  \
+        iovar.error = 0;                                  \
+        iovar.ver = 0;                                    \
+        iovar.key = keyptr;                               \
+        iovar.ctx = NULL;                                 \
+    } while (0)
 
 /* This is a structure used to export DEBUG DIGEST capabilities to Redis
  * modules. We want to capture both the ordered and unordered elements of
  * a data structure, so that a digest can be created in a way that correctly
  * reflects the values. See the DEBUG DIGEST command implementation for more
  * background. */
-typedef struct RedisModuleDigest {
-    unsigned char o[20];    /* Ordered elements. */
-    unsigned char x[20];    /* Xored elements. */
+typedef struct RedisModuleDigest
+{
+    unsigned char o[20]; /* Ordered elements. */
+    unsigned char x[20]; /* Xored elements. */
 } RedisModuleDigest;
 
 /* Just start with a digest composed of all zero bytes. */
-#define moduleInitDigestContext(mdvar) do { \
-    memset(mdvar.o,0,sizeof(mdvar.o)); \
-    memset(mdvar.x,0,sizeof(mdvar.x)); \
-} while(0)
+#define moduleInitDigestContext(mdvar)       \
+    do {                                     \
+        memset(mdvar.o, 0, sizeof(mdvar.o)); \
+        memset(mdvar.x, 0, sizeof(mdvar.x)); \
+    } while (0)
 
 /* Objects encoding. Some kind of objects like Strings and Hashes can be
  * internally represented in multiple ways. The 'encoding' field of the object
  * is set to one of this fields for this object. */
-#define OBJ_ENCODING_RAW 0     /* Raw representation */
-#define OBJ_ENCODING_INT 1     /* Encoded as integer */
-#define OBJ_ENCODING_HT 2      /* Encoded as hash table */
-#define OBJ_ENCODING_ZIPMAP 3  /* Encoded as zipmap */
+#define OBJ_ENCODING_RAW 0 /* Raw representation */
+#define OBJ_ENCODING_INT 1 /* Encoded as integer */
+#define OBJ_ENCODING_HT 2 /* Encoded as hash table */
+#define OBJ_ENCODING_ZIPMAP 3 /* Encoded as zipmap */
 #define OBJ_ENCODING_LINKEDLIST 4 /* No longer used: old list encoding. */
 #define OBJ_ENCODING_ZIPLIST 5 /* Encoded as ziplist */
-#define OBJ_ENCODING_INTSET 6  /* Encoded as intset */
-#define OBJ_ENCODING_SKIPLIST 7  /* Encoded as skiplist */
-#define OBJ_ENCODING_EMBSTR 8  /* Embedded sds string encoding */
+#define OBJ_ENCODING_INTSET 6 /* Encoded as intset */
+#define OBJ_ENCODING_SKIPLIST 7 /* Encoded as skiplist */
+#define OBJ_ENCODING_EMBSTR 8 /* Embedded sds string encoding */
 #define OBJ_ENCODING_QUICKLIST 9 /* Encoded as linked list of ziplists */
 #define OBJ_ENCODING_STREAM 10 /* Encoded as a radix tree of listpacks */
 
 #define LRU_BITS 24
-#define LRU_CLOCK_MAX ((1<<LRU_BITS)-1) /* Max value of obj->lru */
+#define LRU_CLOCK_MAX ((1 << LRU_BITS) - 1) /* Max value of obj->lru */
 #define LRU_CLOCK_RESOLUTION 1000 /* LRU clock resolution in ms */
 
-#define OBJ_SHARED_REFCOUNT INT_MAX     /* Global object never destroyed. */
-#define OBJ_STATIC_REFCOUNT (INT_MAX-1) /* Object allocated in the stack. */
+#define OBJ_SHARED_REFCOUNT INT_MAX /* Global object never destroyed. */
+#define OBJ_STATIC_REFCOUNT (INT_MAX - 1) /* Object allocated in the stack. */
 #define OBJ_FIRST_SPECIAL_REFCOUNT OBJ_STATIC_REFCOUNT
-typedef struct redisObject {
+typedef struct redisObject
+{
     // 对象类型：
     // REDIS_STRING：字符串对象
     // REDIS_LIST：  列表对象
     // REDIS_HASH：  哈希对象
     // REDIS_SET：   集合对象
     // REDIS_ZSET：  有序集合对象
-    unsigned type:4;
+    unsigned type : 4;
     // 对象所使用的底层结构的编码
     // REDIS_ENCODING_INT：       long类型的整数
     // REDIS_ENCODING_EMBSTR：    embstr编码的sds
@@ -687,11 +693,11 @@ typedef struct redisObject {
     // REDIS_ENCODING_ZIPLIST：   压缩列表
     // REDIS_ENCODING_INTSET：    整数集合
     // REDIS_ENCODING_SKIPLIST：  跳跃表和字典（同时使用这两种结构实现有序集合）
-    unsigned encoding:4;
+    unsigned encoding : 4;
     // 记录对象最后一次被命令程序访问的时间
-    unsigned lru:LRU_BITS; /* LRU time (relative to global lru_clock) or
-                            * LFU data (least significant 8 bits frequency
-                            * and most significant 16 bits access time). */
+    unsigned lru : LRU_BITS; /* LRU time (relative to global lru_clock) or
+                              * LFU data (least significant 8 bits frequency
+                              * and most significant 16 bits access time). */
     // 引用计数：该对象被引用的次数
     int refcount;
     // 指向对象使用的底层数据结构，该结构由encoding属性决定
@@ -701,24 +707,26 @@ typedef struct redisObject {
 /* The a string name for an object's type as listed above
  * Native types are checked against the OBJ_STRING, OBJ_LIST, OBJ_* defines,
  * and Module types have their registered name returned. */
-char *getObjectTypeName(robj*);
+char *getObjectTypeName(robj *);
 
 /* Macro used to initialize a Redis object allocated on the stack.
  * Note that this macro is taken near the structure definition to make sure
  * we'll update it when the structure is changed, to avoid bugs like
  * bug #85 introduced exactly in this way. */
-#define initStaticStringObject(_var,_ptr) do { \
-    _var.refcount = OBJ_STATIC_REFCOUNT; \
-    _var.type = OBJ_STRING; \
-    _var.encoding = OBJ_ENCODING_RAW; \
-    _var.ptr = _ptr; \
-} while(0)
+#define initStaticStringObject(_var, _ptr)   \
+    do {                                     \
+        _var.refcount = OBJ_STATIC_REFCOUNT; \
+        _var.type = OBJ_STRING;              \
+        _var.encoding = OBJ_ENCODING_RAW;    \
+        _var.ptr = _ptr;                     \
+    } while (0)
 
 struct evictionPoolEntry; /* Defined in evict.c */
 
 /* This structure is used in order to represent the output buffer of a client,
  * which is actually a linked list of blocks like that, that is: client->reply. */
-typedef struct clientReplyBlock {
+typedef struct clientReplyBlock
+{
     size_t size, used;
     char buf[];
 } clientReplyBlock;
@@ -726,17 +734,18 @@ typedef struct clientReplyBlock {
 /* Redis database representation. There are multiple databases identified
  * by integers from 0 (the default database) up to the max configured
  * database. The database number is the 'id' field in the structure. */
-typedef struct redisDb {
+typedef struct redisDb
+{
     // 数据库的键空间，保存该数据库的所有键值对
-    dict *dict;                 /* The keyspace for this DB */
-    dict *expires;              /* Timeout of keys with a timeout set */
-    dict *blocking_keys;        /* Keys with clients waiting for data (BLPOP)*/
-    dict *ready_keys;           /* Blocked keys that received a PUSH */
-    dict *watched_keys;         /* WATCHED keys for MULTI/EXEC CAS */
-    int id;                     /* Database ID */
-    long long avg_ttl;          /* Average TTL, just for stats */
+    dict *dict; /* The keyspace for this DB */
+    dict *expires; /* Timeout of keys with a timeout set */
+    dict *blocking_keys; /* Keys with clients waiting for data (BLPOP)*/
+    dict *ready_keys; /* Blocked keys that received a PUSH */
+    dict *watched_keys; /* WATCHED keys for MULTI/EXEC CAS */
+    int id; /* Database ID */
+    long long avg_ttl; /* Average TTL, just for stats */
     unsigned long expires_cursor; /* Cursor of the active expire cycle. */
-    list *defrag_later;         /* List of key names to attempt to defrag one by one, gradually. */
+    list *defrag_later; /* List of key names to attempt to defrag one by one, gradually. */
 } redisDb;
 
 /* Declare database backup that include redis main DBs and slots to keys map.
@@ -745,51 +754,55 @@ typedef struct redisDb {
 typedef struct dbBackup dbBackup;
 
 /* Client MULTI/EXEC state */
-typedef struct multiCmd {
+typedef struct multiCmd
+{
     robj **argv;
     int argc;
     struct redisCommand *cmd;
 } multiCmd;
 
-typedef struct multiState {
-    multiCmd *commands;     /* Array of MULTI commands */
-    int count;              /* Total number of MULTI commands */
-    int cmd_flags;          /* The accumulated command flags OR-ed together.
-                               So if at least a command has a given flag, it
-                               will be set in this field. */
-    int cmd_inv_flags;      /* Same as cmd_flags, OR-ing the ~flags. so that it
-                               is possible to know if all the commands have a
-                               certain flag. */
+typedef struct multiState
+{
+    multiCmd *commands; /* Array of MULTI commands */
+    int count; /* Total number of MULTI commands */
+    int cmd_flags; /* The accumulated command flags OR-ed together.
+                      So if at least a command has a given flag, it
+                      will be set in this field. */
+    int cmd_inv_flags; /* Same as cmd_flags, OR-ing the ~flags. so that it
+                          is possible to know if all the commands have a
+                          certain flag. */
 } multiState;
 
 /* This structure holds the blocking operation state for a client.
  * The fields used depend on client->btype. */
-typedef struct blockingState {
+typedef struct blockingState
+{
     /* Generic fields. */
-    mstime_t timeout;       /* Blocking operation timeout. If UNIX current time
-                             * is > timeout then the operation timed out. */
+    mstime_t timeout; /* Blocking operation timeout. If UNIX current time
+                       * is > timeout then the operation timed out. */
 
     /* BLOCKED_LIST, BLOCKED_ZSET and BLOCKED_STREAM */
-    dict *keys;             /* The keys we are waiting to terminate a blocking
-                             * operation such as BLPOP or XREAD. Or NULL. */
-    robj *target;           /* The key that should receive the element,
-                             * for BLMOVE. */
-    struct listPos {
-        int wherefrom;      /* Where to pop from */
-        int whereto;        /* Where to push to */
-    } listpos;              /* The positions in the src/dst lists
-                             * where we want to pop/push an element
-                             * for BLPOP, BRPOP and BLMOVE. */
+    dict *keys; /* The keys we are waiting to terminate a blocking
+                 * operation such as BLPOP or XREAD. Or NULL. */
+    robj *target; /* The key that should receive the element,
+                   * for BLMOVE. */
+    struct listPos
+    {
+        int wherefrom; /* Where to pop from */
+        int whereto; /* Where to push to */
+    } listpos; /* The positions in the src/dst lists
+                * where we want to pop/push an element
+                * for BLPOP, BRPOP and BLMOVE. */
 
     /* BLOCK_STREAM */
-    size_t xread_count;     /* XREAD COUNT option. */
-    robj *xread_group;      /* XREADGROUP group name. */
-    robj *xread_consumer;   /* XREADGROUP consumer name. */
+    size_t xread_count; /* XREAD COUNT option. */
+    robj *xread_group; /* XREADGROUP group name. */
+    robj *xread_consumer; /* XREADGROUP consumer name. */
     int xread_group_noack;
 
     /* BLOCKED_WAIT */
-    int numreplicas;        /* Number of replicas we are waiting for ACK. */
-    long long reploffset;   /* Replication offset to reach. */
+    int numreplicas; /* Number of replicas we are waiting for ACK. */
+    long long reploffset; /* Replication offset to reach. */
 
     /* BLOCKED_MODULE */
     void *module_blocked_handle; /* RedisModuleBlockedClient structure.
@@ -808,7 +821,8 @@ typedef struct blockingState {
  * also called ready_keys in every structure representing a Redis database,
  * where we make sure to remember if a given key was already added in the
  * server.ready_keys list. */
-typedef struct readyList {
+typedef struct readyList
+{
     redisDb *db;
     robj *key;
 } readyList;
@@ -816,30 +830,31 @@ typedef struct readyList {
 /* This structure represents a Redis user. This is useful for ACLs, the
  * user is associated to the connection after the connection is authenticated.
  * If there is no associated user, the connection uses the default user. */
-#define USER_COMMAND_BITS_COUNT 1024    /* The total number of command bits
-                                           in the user structure. The last valid
-                                           command ID we can set in the user
-                                           is USER_COMMAND_BITS_COUNT-1. */
-#define USER_FLAG_ENABLED (1<<0)        /* The user is active. */
-#define USER_FLAG_DISABLED (1<<1)       /* The user is disabled. */
-#define USER_FLAG_ALLKEYS (1<<2)        /* The user can mention any key. */
-#define USER_FLAG_ALLCOMMANDS (1<<3)    /* The user can run all commands. */
-#define USER_FLAG_NOPASS      (1<<4)    /* The user requires no password, any
-                                           provided password will work. For the
-                                           default user, this also means that
-                                           no AUTH is needed, and every
-                                           connection is immediately
-                                           authenticated. */
-#define USER_FLAG_ALLCHANNELS (1<<5)    /* The user can mention any Pub/Sub
-                                           channel. */
-#define USER_FLAG_SANITIZE_PAYLOAD (1<<6)       /* The user require a deep RESTORE
-                                                 * payload sanitization. */
-#define USER_FLAG_SANITIZE_PAYLOAD_SKIP (1<<7)  /* The user should skip the
-                                                 * deep sanitization of RESTORE
-                                                 * payload. */
+#define USER_COMMAND_BITS_COUNT 1024 /* The total number of command bits      \
+                                        in the user structure. The last valid \
+                                        command ID we can set in the user     \
+                                        is USER_COMMAND_BITS_COUNT-1. */
+#define USER_FLAG_ENABLED (1 << 0) /* The user is active. */
+#define USER_FLAG_DISABLED (1 << 1) /* The user is disabled. */
+#define USER_FLAG_ALLKEYS (1 << 2) /* The user can mention any key. */
+#define USER_FLAG_ALLCOMMANDS (1 << 3) /* The user can run all commands. */
+#define USER_FLAG_NOPASS (1 << 4) /* The user requires no password, any   \
+                                     provided password will work. For the \
+                                     default user, this also means that   \
+                                     no AUTH is needed, and every         \
+                                     connection is immediately            \
+                                     authenticated. */
+#define USER_FLAG_ALLCHANNELS (1 << 5) /* The user can mention any Pub/Sub \
+                                          channel. */
+#define USER_FLAG_SANITIZE_PAYLOAD (1 << 6) /* The user require a deep RESTORE \
+                                             * payload sanitization. */
+#define USER_FLAG_SANITIZE_PAYLOAD_SKIP (1 << 7) /* The user should skip the     \
+                                                  * deep sanitization of RESTORE \
+                                                  * payload. */
 
-typedef struct {
-    sds name;       /* The username as an SDS string. */
+typedef struct
+{
+    sds name; /* The username as an SDS string. */
     uint64_t flags; /* See USER_FLAG_* */
 
     /* The bit in allowed_commands is set if this user has the right to
@@ -849,7 +864,7 @@ typedef struct {
      * If the bit for a given command is NOT set and the command has
      * subcommands, Redis will also check allowed_subcommands in order to
      * understand if the command can be executed. */
-    uint64_t allowed_commands[USER_COMMAND_BITS_COUNT/64];
+    uint64_t allowed_commands[USER_COMMAND_BITS_COUNT / 64];
 
     /* This array points, for each command ID (corresponding to the command
      * bit set in allowed_commands), to an array of SDS strings, terminated by
@@ -858,56 +873,57 @@ typedef struct {
      * set to NULL to avoid allocating USER_COMMAND_BITS_COUNT pointers. */
     sds **allowed_subcommands;
     list *passwords; /* A list of SDS valid passwords for this user. */
-    list *patterns;  /* A list of allowed key patterns. If this field is NULL
-                        the user cannot mention any key in a command, unless
-                        the flag ALLKEYS is set in the user. */
-    list *channels;  /* A list of allowed Pub/Sub channel patterns. If this
-                        field is NULL the user cannot mention any channel in a
-                        `PUBLISH` or [P][UNSUBSCRIBE] command, unless the flag
-                        ALLCHANNELS is set in the user. */
+    list *patterns; /* A list of allowed key patterns. If this field is NULL
+                       the user cannot mention any key in a command, unless
+                       the flag ALLKEYS is set in the user. */
+    list *channels; /* A list of allowed Pub/Sub channel patterns. If this
+                       field is NULL the user cannot mention any channel in a
+                       `PUBLISH` or [P][UNSUBSCRIBE] command, unless the flag
+                       ALLCHANNELS is set in the user. */
 } user;
 
 /* With multiplexing we need to take per-client state.
  * Clients are taken in a linked list. */
 
-#define CLIENT_ID_AOF (UINT64_MAX) /* Reserved ID for the AOF client. If you
-                                      need more reserved IDs use UINT64_MAX-1,
+#define CLIENT_ID_AOF (UINT64_MAX) /* Reserved ID for the AOF client. If you   \
+                                      need more reserved IDs use UINT64_MAX-1, \
                                       -2, ... and so forth. */
 
-typedef struct client {
-    uint64_t id;            /* Client incremental unique ID. */
+typedef struct client
+{
+    uint64_t id; /* Client incremental unique ID. */
     // 客户端的连接信息
     // 包含套接字描述符fd等
     connection *conn;
-    int resp;               /* RESP protocol version. Can be 2 or 3. */
+    int resp; /* RESP protocol version. Can be 2 or 3. */
     // 该客户端当前使用的数据库
     // 该属性指向redisServer.db数组的某个元素
-    redisDb *db;            /* Pointer to currently SELECTed DB. */
+    redisDb *db; /* Pointer to currently SELECTed DB. */
     // 客户端的名字（字符串对象类型）
     // 默认没有名字，可以使用client setname命令设置
-    robj *name;             /* As set by CLIENT SETNAME. */
+    robj *name; /* As set by CLIENT SETNAME. */
     // 输入缓冲区：保存客户端发送的命令请求
-    sds querybuf;           /* Buffer we use to accumulate client queries. */
-    size_t qb_pos;          /* The position we have read in querybuf. */
-    sds pending_querybuf;   /* If this client is flagged as master, this buffer
-                               represents the yet not applied portion of the
-                               replication stream that we are receiving from
-                               the master. */
-    size_t querybuf_peak;   /* Recent (100ms or more) peak of querybuf size. */
+    sds querybuf; /* Buffer we use to accumulate client queries. */
+    size_t qb_pos; /* The position we have read in querybuf. */
+    sds pending_querybuf; /* If this client is flagged as master, this buffer
+                             represents the yet not applied portion of the
+                             replication stream that we are receiving from
+                             the master. */
+    size_t querybuf_peak; /* Recent (100ms or more) peak of querybuf size. */
     // 客户端当前要执行的命令的参数个数
     // 命令名称本身也被记为参数个数
-    int argc;               /* Num of arguments of current command. */
+    int argc; /* Num of arguments of current command. */
     // 客户端当前要执行的命令的参数
     // 该参数是数组类型，数组元素是字符串对象
-    robj **argv;            /* Arguments of current command. */
-    int original_argc;      /* Num of arguments of original command if arguments were rewritten. */
-    robj **original_argv;   /* Arguments of original command if arguments were rewritten. */
-    size_t argv_len_sum;    /* Sum of lengths of objects in argv list. */
+    robj **argv; /* Arguments of current command. */
+    int original_argc; /* Num of arguments of original command if arguments were rewritten. */
+    robj **original_argv; /* Arguments of original command if arguments were rewritten. */
+    size_t argv_len_sum; /* Sum of lengths of objects in argv list. */
     // cmd: 客户端正在执行的命令
-    struct redisCommand *cmd, *lastcmd;  /* Last command executed. */
-    user *user;             /* User associated with this connection. If the
-                               user is set to NULL the connection can do
-                               anything (admin). */
+    struct redisCommand *cmd, *lastcmd; /* Last command executed. */
+    user *user; /* User associated with this connection. If the
+                   user is set to NULL the connection can do
+                   anything (). */
     int reqtype;            /* Request protocol type: PROTO_REQ_* */
     int multibulklen;       /* Number of multi bulk arguments left to read. */
     long bulklen;           /* Length of bulk argument in multi bulk request. */
@@ -1711,11 +1727,20 @@ typedef struct {
 typedef void redisCommandProc(client *c);
 typedef int redisGetKeysProc(struct redisCommand *cmd, robj **argv, int argc, getKeysResult *result);
 struct redisCommand {
+    // 命令的名字 如：set
     char *name;
+    // 函数指针：指向命令的实现函数
     // 命令的实现函数
     redisCommandProc *proc;
+    // 命令参数个数
+    // 用于检查命令请求格式是否正确
+    // -N表示参数数量大于等于N；命令名字本身也是一个参数
     int arity;
+    // 字符串形式的标识值，改值记录了命令的属性
+    // 比如：该命令是写命令还是读命令；该命令是否允许载入数据时使用；该命令是否允许在Lua脚本中使用等
     char *sflags;   /* Flags as string representation, one char per flag. */
+    // 对sflags解析后得到的二进制标识，由程序自动生成
+    // 服务器对命令标识检查时，都使用flags属性，而非sflags；因为对二进制标识检查可以使用&、^、~
     uint64_t flags; /* The actual flags, obtained from the 'sflags' field. */
     /* Use a function to determine keys arguments in a command line.
      * Used for Redis Cluster redirect. */
@@ -1724,7 +1749,12 @@ struct redisCommand {
     int firstkey; /* The first argument that's a key (0 = no keys) */
     int lastkey;  /* The last argument that's a key */
     int keystep;  /* The step between first and last key */
-    long long microseconds, calls, rejected_calls, failed_calls;
+    // 服务器总共执行了该命令多少次
+    long long calls;
+    // 服务器执行该命令所耗费的总时长
+    long long microseconds;
+
+    long long rejected_calls, failed_calls;
     int id;     /* Command ID. This is a progressive ID starting from 0 that
                    is assigned at runtime, and is used in order to check
                    ACLs. A connection is able to execute a given command if
