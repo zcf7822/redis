@@ -1876,8 +1876,8 @@ void clientsCron(void) {
 }
 
 /* This function handles 'background' operations we are required to do
- * incrementally in Redis databases, such as active key expiring, resizing,
- * rehashing. */
+ * incrementally【渐进地】 in Redis databases, such as active key expiring, resizing,
+ * rehashing, defragging. */
 void databasesCron(void) {
     /* Expire keys by random sampling. Not required for slaves
      * as master will synthesize DELs for us. */
@@ -1889,6 +1889,7 @@ void databasesCron(void) {
         }
     }
 
+    // 磁盘碎片整理
     /* Defrag keys gradually. */
     activeDefragCycle();
 
