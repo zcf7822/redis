@@ -1642,17 +1642,28 @@ int allPersistenceDisabled(void) {
 
 /* Add a sample to the operations per second array of samples. */
 void trackInstantaneousMetric(int metric, long long current_reading) {
+    // 系统当前毫秒时间
     long long now = mstime();
+    // last_sample_time：上次抽样时间
+    // 上次抽样到本次抽样之间的时间间隔 = 服务器当前时间 - 上次抽样时间
     long long t = now - server.inst_metric[metric].last_sample_time;
+    // last_sample_count：上次抽样时，服务器已执行命令的数量
+    // 上次抽样到本次抽样期间服务器执行的命令数量 = 服务器当前已执行命令数量 - 上次抽样时服务器已执行命令数量
     long long ops = current_reading -
                     server.inst_metric[metric].last_sample_count;
     long long ops_sec;
 
+    // 两次采样期间，系统平均每秒执行命令的数量
     ops_sec = t > 0 ? (ops*1000/t) : 0;
 
+    // server.inst_metric[metric].idx为该次采样计算的统计值要保存的位置
+    // 将本次计算的平均每秒执行的命令的估计值存到缓型采样数组中
     server.inst_metric[metric].samples[server.inst_metric[metric].idx] =
         ops_sec;
+    // 每次采样后，环形采样数组的索引自增1，来得到下次采样时，采样数据要保存的位置
     server.inst_metric[metric].idx++;
+    // STATS_METRIC_SAMPLES：环形采样数组的大小(默认为16)
+    // 在索引值超过环形数组的最大索引时，置为0，以构成缓行数组
     server.inst_metric[metric].idx %= STATS_METRIC_SAMPLES;
     server.inst_metric[metric].last_sample_time = now;
     server.inst_metric[metric].last_sample_count = current_reading;

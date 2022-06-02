@@ -1262,6 +1262,8 @@ struct redisServer {
     dict *orig_commands;        /* Command table before command renaming. */
     aeEventLoop *el;
     rax *errors;                /* Errors table */
+    // 跟unixtime属性一样，是时间缓存，默认每10s更新一次
+    // 用于计算键的空转时间
     redisAtomic unsigned int lruclock; /* Clock for LRU eviction */
     volatile sig_atomic_t shutdown_asap; /* SHUTDOWN needed ASAP */
     int activerehashing;        /* Incremental rehash in serverCron() */
@@ -1610,7 +1612,8 @@ struct redisServer {
     int list_max_ziplist_size;
     int list_compress_depth;
     /* time cache */
-    redisAtomic time_t unixtime; /* Unix time sampled every cron cycle. */
+    // 秒级系统当前时间缓存
+    redisAtomic time_t unixtime; /* Unix time sampled every cron cycle(100ms). */
     time_t timezone;            /* Cached timezone. As set by tzset(). */
     int daylight_active;        /* Currently in daylight saving time. */
     mstime_t mstime;            /* 'unixtime' in milliseconds. */
