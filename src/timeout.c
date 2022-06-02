@@ -48,6 +48,8 @@ int checkBlockedClientTimeout(client *c, mstime_t now) {
     }
 }
 
+// 此方法将当前时间作为参数，是因为次方法在在一个循环中被使用，会被调用多次；
+// 在每次迭代都调用gettimeofday()成本很高昂，且没有实际益处
 /* Check for timeouts. Returns non-zero if the client was terminated.
  * The function gets the current time in milliseconds as argument since
  * it gets called multiple times in a loop, so calling gettimeofday() for
@@ -55,6 +57,9 @@ int checkBlockedClientTimeout(client *c, mstime_t now) {
 int clientsCronHandleTimeout(client *c, mstime_t now_ms) {
     time_t now = now_ms/1000;
 
+    // 如果设置了客户端可空闲的最大时间，则将空闲超时的客户端关闭
+    // 对客户端的标识进行判断，特定角色的客户端不做超时处理：
+    // 从服务器和监视器、主服务器、执行阻塞命令的客户端、执行发布/订阅命令的客户端
     if (server.maxidletime &&
         /* This handles the idle clients connection timeout if set. */
         !(c->flags & CLIENT_SLAVE) &&   /* No timeout for slaves and monitors */

@@ -1679,6 +1679,7 @@ long long getInstantaneousMetric(int metric) {
     return sum / STATS_METRIC_SAMPLES;
 }
 
+// 如果有必要，回收客户端的输入缓冲区
 /* The client query buffer is an sds.c string that can end with a lot of
  * free space not used, this function reclaims space if needed.
  *
@@ -1739,6 +1740,7 @@ int clientsCronResizeQueryBuffer(client *c) {
 size_t ClientsPeakMemInput[CLIENTS_PEAK_MEM_USAGE_SLOTS] = {0};
 size_t ClientsPeakMemOutput[CLIENTS_PEAK_MEM_USAGE_SLOTS] = {0};
 
+// 统计客户端输入缓冲区+参数使用的最大内存、客户端输出缓冲区使用的最大内存
 int clientsCronTrackExpansiveClients(client *c, int time_idx) {
     size_t in_usage = sdsZmallocSize(c->querybuf) + c->argv_len_sum +
 	              (c->argv ? zmalloc_size(c->argv) : 0);
@@ -1751,11 +1753,21 @@ int clientsCronTrackExpansiveClients(client *c, int time_idx) {
     return 0; /* This function never terminates the client. */
 }
 
+// 统计各种类型的客户端使用的内存总和
+// 一个客户端可以有多种角色，每次统计时的角色可能不同；
+// 故，本次统计时，需要先减去上次统计时该客户端的所属类别的内存值后，再加上本次的类别所使用的内存值
+/*
+ * we track the memory usage of
+ * each client and add it to the sum of all the clients of a given type,
+ * however we need to remember what was the old contribution of each
+ * client, and in which category the client was, in order to remove it
+ * before adding it the new value.
+ */
 /* Iterating all the clients in getMemoryOverheadData() is too slow and
- * in turn would make the INFO command too slow. So we perform this
+ * in turn（in turn 相应地）would make the INFO command too slow. So we perform this
  * computation incrementally and track the (not instantaneous but updated
  * to the second) total memory used by clients using clinetsCron() in
- * a more incremental way (depending on server.hz). */
+ * a more incremental（渐进式/渐次） way (depending on server.hz). */
 int clientsCronTrackClientsMemUsage(client *c) {
     size_t mem = 0;
     int type = getClientType(c);
@@ -1850,10 +1862,15 @@ void clientsCron(void) {
         /* The following functions do different service checks on the client.
          * The protocol is that they return non-zero if the client was
          * terminated. */
+        // 1-判断客户端空闲时间是否超时，如果超时，则关闭该客户端
         if (clientsCronHandleTimeout(c,now)) continue;
+        // 2-如果有必要，回收客户端的输入缓冲区，该操作不会关闭客户端；恒返回0
         if (clientsCronResizeQueryBuffer(c)) continue;
+        // 3-统计截止目前已检查的客户端，输入占用的最大内存、输出占用的最大内存；恒返回0
         if (clientsCronTrackExpansiveClients(c, curr_peak_mem_usage_slot)) continue;
+        // 4-统计各类别客户端使用的内存总和；恒返回0
         if (clientsCronTrackClientsMemUsage(c)) continue;
+        // 5-如果达到客户端输出缓冲区的硬性或软性限制，则异步关闭客户端
         if (closeClientOnOutputBufferLimitReached(c, 0)) continue;
     }
 }
@@ -2058,6 +2075,7 @@ int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
      * handler if we don't return here fast enough. */
     if (server.watchdog_period) watchdogScheduleSignal(server.watchdog_period);
 
+    // 更新缓存的时间
     /* Update the time cache. */
     updateCachedTime(1);
 
@@ -2080,7 +2098,7 @@ int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
         long long stat_net_input_bytes, stat_net_output_bytes;
         atomicGet(server.stat_net_input_bytes, stat_net_input_bytes);
         atomicGet(server.stat_net_output_bytes, stat_net_output_bytes);
-
+        // 对服务器每秒处理的命令数进行采样
         trackInstantaneousMetric(STATS_METRIC_COMMAND,server.stat_numcommands);
         trackInstantaneousMetric(STATS_METRIC_NET_INPUT,
                 stat_net_input_bytes);
@@ -2102,8 +2120,11 @@ int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
     unsigned int lruclock = getLRUClock();
     atomicSet(server.lruclock,lruclock);
 
+    // 更新最大内存使用量
     cronUpdateMemoryStats();
 
+    // 判断是否关闭服务器
+    // 在此处拦截SIGTERM信号，将服务器安全停机；在信号处理器中停机不合适
     /* We received a SIGTERM, shutting down here in a safe way, as it is
      * not ok doing so inside the signal handler. */
     if (server.shutdown_asap) {
@@ -5754,6 +5775,7 @@ int changeListenPort(int port, socketFds *sfd, aeFileProc *accept_handler) {
     return C_OK;
 }
 
+// 处理服务器进程的SIGTERM信号的处理器
 static void sigShutdownHandler(int sig) {
     char *msg;
 

@@ -3254,7 +3254,7 @@ int checkClientOutputBufferLimits(client *c) {
 }
 
 /* Asynchronously close a client if soft or hard limit is reached on the
- * output buffer size. The caller can check if the client will be closed
+ * output buffer size【limit on .. 对..的限制】. The caller can check if the client will be closed
  * checking if the client CLIENT_CLOSE_ASAP flag is set.
  *
  * Note: we need to close the client asynchronously because this function is

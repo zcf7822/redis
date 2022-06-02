@@ -998,7 +998,7 @@ typedef struct client
     /* In clientsCronTrackClientsMemUsage() we track the memory usage of
      * each client and add it to the sum of all the clients of a given type,
      * however we need to remember what was the old contribution of each
-     * client, and in which categoty the client was, in order to remove it
+     * client, and in which category the client was, in order to remove it
      * before adding it the new value. */
     uint64_t client_cron_last_memory_usage;
     int      client_cron_last_memory_type;
@@ -1265,6 +1265,8 @@ struct redisServer {
     // 跟unixtime属性一样，是时间缓存，默认每10s更新一次
     // 用于计算键的空转时间
     redisAtomic unsigned int lruclock; /* Clock for LRU eviction */
+    // asap - as soon as possible
+    // 立即关闭服务器进程的信号
     volatile sig_atomic_t shutdown_asap; /* SHUTDOWN needed ASAP */
     int activerehashing;        /* Incremental rehash in serverCron() */
     int active_defrag_running;  /* Active defragmentation running (holds current scan aggressiveness) */
@@ -1342,6 +1344,7 @@ struct redisServer {
                         *xgroupCommand, *rpoplpushCommand, *lmoveCommand;
     /* Fields used only for stats */
     time_t stat_starttime;          /* Server start time */
+    // 服务器已处理的命令数
     long long stat_numcommands;     /* Number of processed commands */
     long long stat_numconnections;  /* Number of connections received */
     long long stat_expiredkeys;     /* Number of expired keys */
@@ -1356,6 +1359,7 @@ struct redisServer {
     long long stat_active_defrag_key_hits;  /* number of keys with moved allocations */
     long long stat_active_defrag_key_misses;/* number of keys scanned and not moved */
     long long stat_active_defrag_scanned;   /* number of dictEntries scanned */
+    // 使用的内存的峰值
     size_t stat_peak_memory;        /* Max used memory record */
     long long stat_fork_time;       /* Time needed to perform latest fork() */
     double stat_fork_rate;          /* Fork rate in GB/sec. */
