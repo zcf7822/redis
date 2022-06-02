@@ -1435,6 +1435,7 @@ struct redisServer {
     off_t aof_current_size;         /* AOF current size. */
     off_t aof_fsync_offset;         /* AOF offset which is already synced to disk. */
     int aof_flush_sleep;            /* Micros to sleep before flush. (used by tests) */
+    // 当服务器执行BGSAVE时，客户端发送了BGREWRITEAOF命令，则服务器将该命令的执行延迟到BGSAVE执行完毕后进行
     int aof_rewrite_scheduled;      /* Rewrite once BGSAVE terminates. */
     list *aof_rewrite_buf_blocks;   /* Hold changes during an AOF rewrite. */
     sds aof_buf;      /* AOF buffer, written before entering the event loop */
